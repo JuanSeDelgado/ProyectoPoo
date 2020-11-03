@@ -22,7 +22,7 @@ public class Main {
     }
     
     
-    public int masNumero(){
+    public int sumarUno(){
             int numero = 0;
             if(numero<numero+1){
                 numero++;
