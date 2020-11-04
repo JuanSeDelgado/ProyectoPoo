@@ -13,8 +13,8 @@ public class EstudiantePostgrado extends Estudiante {
     
     private int semestre;
 
-    public EstudiantePostgrado(int semestre, String nombre, String programa, int codigo, Monitoria _monitoria) {
-        super(nombre, programa, codigo, _monitoria);
+    public EstudiantePostgrado(int semestre, String nombre, String programa, int codigo) {
+        super(nombre, programa, codigo);
         this.semestre = semestre;
     }
 

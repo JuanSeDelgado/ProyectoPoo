@@ -13,13 +13,12 @@ public class Estudiante {
     
     private String nombre, programa;
     private int codigo;
-    private Monitoria _monitoria;
 
-    public Estudiante(String nombre, String programa, int codigo, Monitoria _monitoria) {
+
+    public Estudiante(String nombre, String programa, int codigo) {
         this.nombre = nombre;
         this.programa = programa;
         this.codigo = codigo;
-        this._monitoria = _monitoria;
     }
 
     public Estudiante() {
@@ -49,14 +48,7 @@ public class Estudiante {
         this.codigo = codigo;
     }
 
-    public Monitoria getMonitoria() {
-        return _monitoria;
-    }
-
-    public void setMonitoria(Monitoria _monitoria) {
-        this._monitoria = _monitoria;
-    }
-    
+   
     
     
 }

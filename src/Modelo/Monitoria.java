@@ -15,13 +15,29 @@ public class Monitoria {
     
     private String materia, tema;
     private LocalDate fechaInicio,fechaFinal;
+    private Estudiante suEstudiante;
 
-    public Monitoria(String materia, String tema, LocalDate fechaInicio, LocalDate fechaFinal) {
-        this.materia = materia;
+    public Monitoria() {
+    }
+    
+    
+
+    public Monitoria(String tema, LocalDate fechaInicio, LocalDate fechaFinal, Estudiante suEstudiante) {
         this.tema = tema;
         this.fechaInicio = fechaInicio;
         this.fechaFinal = fechaFinal;
+        this.suEstudiante = suEstudiante;
     }
+
+    public Estudiante getSuEstudiante() {
+        return suEstudiante;
+    }
+
+    public void setSuEstudiante(Estudiante suEstudiante) {
+        this.suEstudiante = suEstudiante;
+    }
+
+    
 
     public String getMateria() {
         return materia;
