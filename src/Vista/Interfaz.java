@@ -31,6 +31,14 @@ public class Interfaz extends javax.swing.JFrame {
         txt4.setVisible(false);
         txt5.setVisible(false);
     }
+    
+    public int sumarUno(){
+            int numero = 0;
+            if(numero<numero+1){
+                numero++;
+            }
+            return numero;
+        }
 
     /**
      * This method is called from within the constructor to initialize the form.
