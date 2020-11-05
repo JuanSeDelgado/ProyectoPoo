@@ -6,9 +6,8 @@
 package Modelo;
 
 import java.time.Duration;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.time.Period;
+
 
 /**
  *
@@ -22,7 +21,6 @@ public class Monitoria {
 
     public Monitoria() {
     }
-    
     
 
     public Monitoria(String tema, LocalDateTime fechaInicio, LocalDateTime fechaFinal, Estudiante suEstudiante) {
@@ -39,8 +37,6 @@ public class Monitoria {
     public void setSuEstudiante(Estudiante suEstudiante) {
         this.suEstudiante = suEstudiante;
     }
-
-    
 
     public String getMateria() {
         return materia;

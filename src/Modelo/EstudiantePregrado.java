@@ -13,7 +13,7 @@ public class EstudiantePregrado extends Estudiante{
     
     private double promedio;
 
-    public EstudiantePregrado(double promedio, String nombre, String programa, int codigo) {
+    public EstudiantePregrado(double promedio, String nombre, String programa, String codigo) {
         super(nombre, programa, codigo);
         this.promedio = promedio;
     }

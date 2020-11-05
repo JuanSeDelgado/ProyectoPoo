@@ -12,10 +12,10 @@ package Modelo;
 public class Estudiante {
     
     private String nombre, programa;
-    private int codigo;
+    private String codigo;
 
 
-    public Estudiante(String nombre, String programa, int codigo) {
+    public Estudiante(String nombre, String programa, String codigo) {
         this.nombre = nombre;
         this.programa = programa;
         this.codigo = codigo;
@@ -40,11 +40,11 @@ public class Estudiante {
         this.programa = programa;
     }
 
-    public int getCodigo() {
+    public String getCodigo() {
         return codigo;
     }
 
-    public void setCodigo(int codigo) {
+    public void setCodigo(String codigo) {
         this.codigo = codigo;
     }
 
