@@ -22,11 +22,5 @@ public class Main {
     }
     
     
-    public int sumarUno(){
-            int numero = 0;
-            if(numero<numero+1){
-                numero++;
-            }
-            return numero;
-        }
+   
 }
