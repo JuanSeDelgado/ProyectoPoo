@@ -5,7 +5,10 @@
  */
 package Modelo;
 
+import java.time.Duration;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.Period;
 
 /**
  *
@@ -14,7 +17,7 @@ import java.time.LocalDate;
 public class Monitoria {
     
     private String materia, tema;
-    private LocalDate fechaInicio,fechaFinal;
+    private LocalDateTime fechaInicio,fechaFinal;
     private Estudiante suEstudiante;
 
     public Monitoria() {
@@ -22,7 +25,7 @@ public class Monitoria {
     
     
 
-    public Monitoria(String tema, LocalDate fechaInicio, LocalDate fechaFinal, Estudiante suEstudiante) {
+    public Monitoria(String tema, LocalDateTime fechaInicio, LocalDateTime fechaFinal, Estudiante suEstudiante) {
         this.tema = tema;
         this.fechaInicio = fechaInicio;
         this.fechaFinal = fechaFinal;
@@ -55,21 +58,41 @@ public class Monitoria {
         this.tema = tema;
     }
 
-    public LocalDate getFechaInicio() {
+    public LocalDateTime getFechaInicio() {
         return fechaInicio;
     }
 
-    public void setFechaInicio(LocalDate fechaInicio) {
+    public void setFechaInicio(LocalDateTime fechaInicio) {
         this.fechaInicio = fechaInicio;
     }
 
-    public LocalDate getFechaFinal() {
+    public LocalDateTime getFechaFinal() {
         return fechaFinal;
     }
 
-    public void setFechaFinal(LocalDate fechaFinal) {
+    public void setFechaFinal(LocalDateTime fechaFinal) {
         this.fechaFinal = fechaFinal;
     }
+    
+    private static long[] getTime(LocalDateTime fechaDesde, LocalDateTime fechaHasta){
+        Duration duracion = Duration.between(fechaHasta, fechaDesde);
+        
+        long segundos = duracion.getSeconds();
+        long minutos = duracion.toMinutes();
+        
+        return new long[] {minutos,segundos};
+ 
+    }
 
+    public String tiempoMonitoria(){
+        long time[] = getTime(fechaInicio, fechaFinal);
+        
+        String minutos = time[0] + "minutos";
+        String segundos = time [1] + "segundos";
+        
+        String info = minutos + segundos;
 
+        
+        return info ;
+    }
 }
