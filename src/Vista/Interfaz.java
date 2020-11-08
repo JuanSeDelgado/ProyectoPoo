@@ -33,14 +33,14 @@ public class Interfaz extends javax.swing.JFrame {
         txt4.setVisible(false);
         txt5.setVisible(false);
     }
-    
-     public int sumarUno(){
-            int numero = 0;
-            if(numero<numero+1){
-                numero++;
-            }
-            return numero;
+
+    public int sumarUno() {
+        int numero = 0;
+        if (numero < numero + 1) {
+            numero++;
         }
+        return numero;
+    }
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -428,81 +428,106 @@ public class Interfaz extends javax.swing.JFrame {
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         // TODO add your handling code here:
-        String codigo = txt1.getText();
-        String nombre = txt2.getText();
-        String programa = txt3.getText();
-        
-        double promedio=0;
-        int semestre=0;
-        
-        String materia = txt6.getText();
-        String tema = txt7.getText();
-        
-        String fechaI1 = txt8.getText();
-        String timeI1 = "T" + time1.getText();
-        String fechaI2 = fechaI1 + timeI1;
-        
-        String fechaF1 = txt9.getText();
-        String time2G = "T" + time2.getText();
-        String fechaF2 = fechaF1 + time2G;
-        
-        
-        LocalDateTime fechaInicio = LocalDateTime.parse(fechaI2);
-        LocalDateTime fechaFinal = LocalDateTime.parse(fechaF2);
-       
-        
-        
-        if(promedioLabel.isVisible()){
-             promedio = Double.parseDouble(txt4.getText());
-        } else if(semestreLabel.isVisible()){
-             semestre = Integer.parseInt(txt5.getText());
+        LocalDateTime fechaInicio = null;
+        LocalDateTime fechaFinal = null;
+        String nombre = null;
+        String codigo = null;
+        String tema = null;
+        String materia = null;
+        String programa = null;
+        double promedio = 0.0;
+        int semestre = 0;
+
+        nombre = txt2.getText();
+        codigo = txt1.getText();
+        programa = txt3.getText();
+        materia = txt6.getText();
+        tema = txt7.getText();
+
+        if (nombre == "" || codigo == "" || programa == "" || materia == "" || tema == "" || promedio == 0.0 || semestre == 0) {
+
+            JOptionPane.showMessageDialog(null, "Verifique los campos vacios");
         }
-        
-        
-        if(tipoEstudiante.getSelectedIndex()==1){
-            EstudiantePregrado estudiantePre = new EstudiantePregrado(promedio, nombre, programa, codigo);
-            Monitoria monitoria = new Monitoria(tema, materia, fechaInicio, fechaFinal, estudiantePre);
-            listaMonitorias.add(monitoria);
+
+        try {
+            String fechaI1 = txt8.getText();
+            String timeI1 = "T" + time1.getText();
+            String fechaI2 = fechaI1 + timeI1;
+
+            String fechaF1 = txt9.getText();
+            String time2G = "T" + time2.getText();
+            String fechaF2 = fechaF1 + time2G;
+
+            fechaInicio = LocalDateTime.parse(fechaI2);
+            fechaFinal = LocalDateTime.parse(fechaF2);
+
+        } catch (Exception e) {
+
+            JOptionPane.showMessageDialog(null, "Ingrese la fecha usando el siguiente formato AAAA-MM-DD y para la hora HH:MM:SS");
+
+        } finally {
+
+            if (promedioLabel.isVisible()) {
+                promedio = Double.parseDouble(txt4.getText());
+            } else if (semestreLabel.isVisible()) {
+                semestre = Integer.parseInt(txt5.getText());
+            }
+
+            if (tipoEstudiante.getSelectedIndex() == 1) {
+                EstudiantePregrado estudiantePre = new EstudiantePregrado(promedio, nombre, programa, codigo);
+                Monitoria monitoria = new Monitoria(tema, materia, fechaInicio, fechaFinal, estudiantePre);
+                listaMonitorias.add(monitoria);
+            } else if (tipoEstudiante.getSelectedIndex() == 2) {
+                EstudiantePostgrado estudiantePost = new EstudiantePostgrado(semestre, nombre, programa, codigo);
+                Monitoria monitoria = new Monitoria(tema, materia, fechaInicio, fechaFinal, estudiantePost);
+                listaMonitorias.add(monitoria);
+            } else if (tipoEstudiante.getSelectedIndex() == 0) {
+                JOptionPane.showMessageDialog(null, "Porfavor seleccione un tipo de estudiante");
+            }
+
         }
-        else if(tipoEstudiante.getSelectedIndex()==2){
-            EstudiantePostgrado estudiantePost = new EstudiantePostgrado(semestre, nombre, programa, codigo);
-            Monitoria monitoria = new Monitoria(tema, materia, fechaInicio, fechaFinal, estudiantePost);
-            listaMonitorias.add(monitoria);
-        }
-        else if(tipoEstudiante.getSelectedIndex()==0){
-            JOptionPane.showMessageDialog(null, "Porfavor seleccione un tipo de estudiante");
-        }
-        
-        
-             
+
+        txt1.setText("");
+        txt2.setText("");
+        txt3.setText("");
+        txt4.setText("");
+        txt5.setText("");
+        txt6.setText("");
+        txt7.setText("");
+        txt8.setText("AAAA-MM-DD");
+        txt9.setText("AAAA-MM-DD");
+        time1.setText("HH:MM:SS");
+        time2.setText("HH:MM:SS");
+        tipoEstudiante.setSelectedIndex(0);
+
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void txt4KeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txt4KeyTyped
         // TODO add your handling code here:
         char c = evt.getKeyChar();
-        
-        if((c<'0' || c>'9') && (c<'.' || c>'.') && (c!= '\b')){
+
+        if ((c < '0' || c > '9') && (c < '.' || c > '.') && (c != '\b')) {
             evt.consume();
         }
-        
+
     }//GEN-LAST:event_txt4KeyTyped
 
     private void txt5KeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txt5KeyTyped
         // TODO add your handling code here:
-        
-         char c = evt.getKeyChar();
-        
-        if((c<'0' || c>'9') && (c<'.' || c>'.') && (c!= '\b')){
+
+        char c = evt.getKeyChar();
+
+        if ((c < '0' || c > '9') && (c < '.' || c > '.') && (c != '\b')) {
             evt.consume();
         }
     }//GEN-LAST:event_txt5KeyTyped
 
     private void txt1KeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txt1KeyTyped
         // TODO add your handling code here:
-        
-         char c = evt.getKeyChar();
-        
-        if((c<'0' || c>'9') && (c!= '\b')){
+
+        char c = evt.getKeyChar();
+
+        if ((c < '0' || c > '9') && (c != '\b')) {
             evt.consume();
         }
     }//GEN-LAST:event_txt1KeyTyped
