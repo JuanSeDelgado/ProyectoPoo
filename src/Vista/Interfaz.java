@@ -77,6 +77,10 @@ public class Interfaz extends javax.swing.JFrame {
         txt9 = new javax.swing.JTextField();
         jButton1 = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
+        time1 = new javax.swing.JTextField();
+        jLabel11 = new javax.swing.JLabel();
+        jLabel12 = new javax.swing.JLabel();
+        time2 = new javax.swing.JTextField();
         jPanel2 = new javax.swing.JPanel();
         jPanel3 = new javax.swing.JPanel();
 
@@ -96,6 +100,12 @@ public class Interfaz extends javax.swing.JFrame {
         jLabel4.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jLabel4.setText("Programa:");
 
+        txt1.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txt1KeyTyped(evt);
+            }
+        });
+
         jLabel5.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jLabel5.setText("Tipo Estudiante");
 
@@ -114,12 +124,23 @@ public class Interfaz extends javax.swing.JFrame {
             }
         });
 
+        txt4.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txt4KeyTyped(evt);
+            }
+        });
+
         semestreLabel.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         semestreLabel.setText("Semestre:");
 
         txt5.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 txt5ActionPerformed(evt);
+            }
+        });
+        txt5.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txt5KeyTyped(evt);
             }
         });
 
@@ -138,9 +159,9 @@ public class Interfaz extends javax.swing.JFrame {
         jLabel10.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jLabel10.setText("Fecha de Fin:");
 
-        txt8.setText("AAAA-MM-DD HH:MM:SS");
+        txt8.setText("AAAA-MM-DD");
 
-        txt9.setText("AAAA-MM-DD HH:MM:SS");
+        txt9.setText("AAAA-MM-DD");
 
         jButton1.setText("Buscar Estudiante");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
@@ -157,6 +178,16 @@ public class Interfaz extends javax.swing.JFrame {
             }
         });
 
+        time1.setText("HH:MM:SS");
+
+        jLabel11.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        jLabel11.setText("Hora");
+
+        jLabel12.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        jLabel12.setText("Hora");
+
+        time2.setText("HH:MM:SS");
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -166,27 +197,17 @@ public class Interfaz extends javax.swing.JFrame {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(jLabel2)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 202, Short.MAX_VALUE)
+                        .addGap(250, 250, 250)
                         .addComponent(jButton1)
                         .addGap(88, 88, 88)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jLabel7)
-                                    .addComponent(jLabel8))
-                                .addGap(18, 18, 18)
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addComponent(txt6)
-                                    .addComponent(txt7, javax.swing.GroupLayout.PREFERRED_SIZE, 87, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jLabel9)
-                                    .addComponent(jLabel10))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addComponent(txt8)
-                                    .addComponent(txt9, javax.swing.GroupLayout.PREFERRED_SIZE, 141, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                        .addGap(103, 103, 103))
+                            .addComponent(jLabel7)
+                            .addComponent(jLabel8))
+                        .addGap(18, 18, 18)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(txt6)
+                            .addComponent(txt7, javax.swing.GroupLayout.PREFERRED_SIZE, 87, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addContainerGap())
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel3)
@@ -213,7 +234,27 @@ public class Interfaz extends javax.swing.JFrame {
                                     .addComponent(txt4, javax.swing.GroupLayout.PREFERRED_SIZE, 53, javax.swing.GroupLayout.PREFERRED_SIZE))))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(jButton2)
-                        .addGap(161, 161, 161))))
+                        .addGap(161, 161, 161))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(473, 473, 473)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel9)
+                            .addComponent(jLabel10))
+                        .addGap(18, 18, 18)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(txt8, javax.swing.GroupLayout.PREFERRED_SIZE, 82, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(txt9, javax.swing.GroupLayout.PREFERRED_SIZE, 82, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(18, 18, 18)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addComponent(jLabel12)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(time2))
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addComponent(jLabel11)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(time1, javax.swing.GroupLayout.PREFERRED_SIZE, 77, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGap(0, 10, Short.MAX_VALUE))))
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGap(82, 82, 82)
                 .addComponent(jLabel1)
@@ -266,11 +307,15 @@ public class Interfaz extends javax.swing.JFrame {
                         .addGap(24, 24, 24)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel9)
-                            .addComponent(txt8, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(txt8, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(time1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel11))
                         .addGap(28, 28, 28)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel10)
-                            .addComponent(txt9, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(txt9, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel12)
+                            .addComponent(time2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(48, 48, 48)
                         .addComponent(jButton2)))
                 .addContainerGap(80, Short.MAX_VALUE))
@@ -386,30 +431,81 @@ public class Interfaz extends javax.swing.JFrame {
         String codigo = txt1.getText();
         String nombre = txt2.getText();
         String programa = txt3.getText();
-        double promedio = Double.parseDouble(txt4.getText());
-        int semestre = Integer.parseInt(txt5.getText());
+        
+        double promedio=0;
+        int semestre=0;
+        
         String materia = txt6.getText();
         String tema = txt7.getText();
-        String fechaInicio = txt8.getText();
-        LocalDateTime fechaI = LocalDateTime.parse(fechaInicio);
-        String fechaFinal = txt9.getText();
-        LocalDateTime fechaF = LocalDateTime.parse(fechaFinal);
-        String tipoE = tipoEstudiante.getSelectedItem().toString();
         
-        if("Pregrado".equalsIgnoreCase(tipoE)){
+        String fechaI1 = txt8.getText();
+        String timeI1 = "T" + time1.getText();
+        String fechaI2 = fechaI1 + timeI1;
+        
+        String fechaF1 = txt9.getText();
+        String time2G = "T" + time2.getText();
+        String fechaF2 = fechaF1 + time2G;
+        
+        
+        LocalDateTime fechaInicio = LocalDateTime.parse(fechaI2);
+        LocalDateTime fechaFinal = LocalDateTime.parse(fechaF2);
+       
+        
+        
+        if(promedioLabel.isVisible()){
+             promedio = Double.parseDouble(txt4.getText());
+        } else if(semestreLabel.isVisible()){
+             semestre = Integer.parseInt(txt5.getText());
+        }
+        
+        
+        if(tipoEstudiante.getSelectedIndex()==1){
             EstudiantePregrado estudiantePre = new EstudiantePregrado(promedio, nombre, programa, codigo);
-            Monitoria monitoria = new Monitoria(tema, materia, fechaI, fechaF, estudiantePre);
+            Monitoria monitoria = new Monitoria(tema, materia, fechaInicio, fechaFinal, estudiantePre);
             listaMonitorias.add(monitoria);
         }
-        else if("Postgrado".equalsIgnoreCase(tipoE)){
+        else if(tipoEstudiante.getSelectedIndex()==2){
             EstudiantePostgrado estudiantePost = new EstudiantePostgrado(semestre, nombre, programa, codigo);
-            Monitoria monitoria = new Monitoria(tema, materia, fechaI, fechaF, estudiantePost);
+            Monitoria monitoria = new Monitoria(tema, materia, fechaInicio, fechaFinal, estudiantePost);
             listaMonitorias.add(monitoria);
+        }
+        else if(tipoEstudiante.getSelectedIndex()==0){
+            JOptionPane.showMessageDialog(null, "Porfavor seleccione un tipo de estudiante");
         }
         
         
              
     }//GEN-LAST:event_jButton2ActionPerformed
+
+    private void txt4KeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txt4KeyTyped
+        // TODO add your handling code here:
+        char c = evt.getKeyChar();
+        
+        if((c<'0' || c>'9') && (c<'.' || c>'.') && (c!= '\b')){
+            evt.consume();
+        }
+        
+    }//GEN-LAST:event_txt4KeyTyped
+
+    private void txt5KeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txt5KeyTyped
+        // TODO add your handling code here:
+        
+         char c = evt.getKeyChar();
+        
+        if((c<'0' || c>'9') && (c<'.' || c>'.') && (c!= '\b')){
+            evt.consume();
+        }
+    }//GEN-LAST:event_txt5KeyTyped
+
+    private void txt1KeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txt1KeyTyped
+        // TODO add your handling code here:
+        
+         char c = evt.getKeyChar();
+        
+        if((c<'0' || c>'9') && (c!= '\b')){
+            evt.consume();
+        }
+    }//GEN-LAST:event_txt1KeyTyped
 
     /**
      * @param args the command line arguments
@@ -451,6 +547,8 @@ public class Interfaz extends javax.swing.JFrame {
     private javax.swing.JButton jButton2;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
+    private javax.swing.JLabel jLabel11;
+    private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
@@ -465,6 +563,8 @@ public class Interfaz extends javax.swing.JFrame {
     private javax.swing.JTabbedPane jTabbedPane1;
     private javax.swing.JLabel promedioLabel;
     private javax.swing.JLabel semestreLabel;
+    private javax.swing.JTextField time1;
+    private javax.swing.JTextField time2;
     private javax.swing.JComboBox<String> tipoEstudiante;
     private javax.swing.JTextField txt1;
     private javax.swing.JTextField txt2;
