@@ -8,6 +8,8 @@ package Vista;
 import Modelo.EstudiantePostgrado;
 import Modelo.EstudiantePregrado;
 import Modelo.Monitoria;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.LinkedList;
 import javax.swing.JOptionPane;
 
@@ -97,7 +99,7 @@ public class Interfaz extends javax.swing.JFrame {
         jLabel5.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jLabel5.setText("Tipo Estudiante");
 
-        tipoEstudiante.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "     -Seleccione-", "Pregrado", "PostGrado" }));
+        tipoEstudiante.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "-Seleccione-", "Pregrado", "PostGrado" }));
         tipoEstudiante.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 tipoEstudianteActionPerformed(evt);
@@ -149,6 +151,11 @@ public class Interfaz extends javax.swing.JFrame {
 
         jButton2.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jButton2.setText("Guardar Monitoria");
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -373,6 +380,36 @@ public class Interfaz extends javax.swing.JFrame {
         }
 
     }//GEN-LAST:event_tipoEstudianteActionPerformed
+
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        // TODO add your handling code here:
+        String codigo = txt1.getText();
+        String nombre = txt2.getText();
+        String programa = txt3.getText();
+        double promedio = Double.parseDouble(txt4.getText());
+        int semestre = Integer.parseInt(txt5.getText());
+        String materia = txt6.getText();
+        String tema = txt7.getText();
+        String fechaInicio = txt8.getText();
+        LocalDateTime fechaI = LocalDateTime.parse(fechaInicio);
+        String fechaFinal = txt9.getText();
+        LocalDateTime fechaF = LocalDateTime.parse(fechaFinal);
+        String tipoE = tipoEstudiante.getSelectedItem().toString();
+        
+        if("Pregrado".equalsIgnoreCase(tipoE)){
+            EstudiantePregrado estudiantePre = new EstudiantePregrado(promedio, nombre, programa, codigo);
+            Monitoria monitoria = new Monitoria(tema, materia, fechaI, fechaF, estudiantePre);
+            listaMonitorias.add(monitoria);
+        }
+        else if("Postgrado".equalsIgnoreCase(tipoE)){
+            EstudiantePostgrado estudiantePost = new EstudiantePostgrado(semestre, nombre, programa, codigo);
+            Monitoria monitoria = new Monitoria(tema, materia, fechaI, fechaF, estudiantePost);
+            listaMonitorias.add(monitoria);
+        }
+        
+        
+             
+    }//GEN-LAST:event_jButton2ActionPerformed
 
     /**
      * @param args the command line arguments

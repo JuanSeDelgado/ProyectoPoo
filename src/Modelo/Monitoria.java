@@ -23,8 +23,9 @@ public class Monitoria {
     }
     
 
-    public Monitoria(String tema, LocalDateTime fechaInicio, LocalDateTime fechaFinal, Estudiante suEstudiante) {
+    public Monitoria(String tema, String materia, LocalDateTime fechaInicio, LocalDateTime fechaFinal, Estudiante suEstudiante) {
         this.tema = tema;
+        this.materia = materia;
         this.fechaInicio = fechaInicio;
         this.fechaFinal = fechaFinal;
         this.suEstudiante = suEstudiante;
