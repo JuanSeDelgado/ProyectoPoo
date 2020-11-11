@@ -444,7 +444,7 @@ public class Interfaz extends javax.swing.JFrame {
         materia = txt6.getText();
         tema = txt7.getText();
 
-        if (nombre == "" || codigo == "" || programa == "" || materia == "" || tema == "" || promedio == 0.0 || semestre == 0) {
+        if (nombre == "" || codigo == "" || programa == "" || materia == "" || tema == "") {
 
             JOptionPane.showMessageDialog(null, "Verifique los campos vacios");
         }
@@ -466,13 +466,15 @@ public class Interfaz extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null, "Ingrese la fecha usando el siguiente formato AAAA-MM-DD y para la hora HH:MM:SS");
 
         } finally {
-
-            if (promedioLabel.isVisible()) {
-                promedio = Double.parseDouble(txt4.getText());
-            } else if (semestreLabel.isVisible()) {
-                semestre = Integer.parseInt(txt5.getText());
+            try {
+                if (promedioLabel.isVisible()) {
+                    promedio = Double.parseDouble(txt4.getText());
+                } else if (semestreLabel.isVisible()) {
+                    semestre = Integer.parseInt(txt5.getText());
+                }
+            } catch (NumberFormatException e) {
+                JOptionPane.showMessageDialog(null, "Verifique los campos vacios");
             }
-
             if (tipoEstudiante.getSelectedIndex() == 1) {
                 EstudiantePregrado estudiantePre = new EstudiantePregrado(promedio, nombre, programa, codigo);
                 Monitoria monitoria = new Monitoria(tema, materia, fechaInicio, fechaFinal, estudiantePre);
