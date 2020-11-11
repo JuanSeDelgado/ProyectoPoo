@@ -41,6 +41,22 @@ public class Interfaz extends javax.swing.JFrame {
         }
         return numero;
     }
+    
+    // Despues de guardar una monitoria setea todos los textField vacios, y a su formato inicial
+    public void setVoidAll(){
+        txt1.setText("");
+        txt2.setText("");
+        txt3.setText("");
+        txt4.setText("");
+        txt5.setText("");
+        txt6.setText("");
+        txt7.setText("");
+        txt8.setText("AAAA-MM-DD");
+        txt9.setText("AAAA-MM-DD");
+        time1.setText("HH:MM:SS");
+        time2.setText("HH:MM:SS");
+        tipoEstudiante.setSelectedIndex(0);
+    }
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -318,7 +334,7 @@ public class Interfaz extends javax.swing.JFrame {
                             .addComponent(time2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(48, 48, 48)
                         .addComponent(jButton2)))
-                .addContainerGap(80, Short.MAX_VALUE))
+                .addContainerGap(147, Short.MAX_VALUE))
         );
 
         jTabbedPane1.addTab("Ingresar Monitoria", jPanel1);
@@ -331,7 +347,7 @@ public class Interfaz extends javax.swing.JFrame {
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 382, Short.MAX_VALUE)
+            .addGap(0, 449, Short.MAX_VALUE)
         );
 
         jTabbedPane1.addTab("Consultar Monitorias", jPanel2);
@@ -344,7 +360,7 @@ public class Interfaz extends javax.swing.JFrame {
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 382, Short.MAX_VALUE)
+            .addGap(0, 449, Short.MAX_VALUE)
         );
 
         jTabbedPane1.addTab("Consultar Monitorias De Un Estudiante", jPanel3);
@@ -430,25 +446,25 @@ public class Interfaz extends javax.swing.JFrame {
         // TODO add your handling code here:
         LocalDateTime fechaInicio = null;
         LocalDateTime fechaFinal = null;
-        String nombre = null;
-        String codigo = null;
-        String tema = null;
-        String materia = null;
-        String programa = null;
-        double promedio = 0.0;
-        int semestre = 0;
 
-        nombre = txt2.getText();
-        codigo = txt1.getText();
-        programa = txt3.getText();
-        materia = txt6.getText();
-        tema = txt7.getText();
+        String nombre = txt2.getText();
+        String codigo = txt1.getText();
+        String programa = txt3.getText();
+        String materia = txt6.getText();
+        String tema = txt7.getText();
 
-        if (nombre == "" || codigo == "" || programa == "" || materia == "" || tema == "") {
+        double promedio= 0;
+        int semestre=0;
+
+        
+        if ("".equals(nombre) || "".equals(codigo) || "".equals(programa) || "".equals(materia) || "".equals(tema)) {
 
             JOptionPane.showMessageDialog(null, "Verifique los campos vacios");
         }
-
+        
+       
+        
+        //Try-Catch para el formato de la fecha y hora
         try {
             String fechaI1 = txt8.getText();
             String timeI1 = "T" + time1.getText();
@@ -461,49 +477,54 @@ public class Interfaz extends javax.swing.JFrame {
             fechaInicio = LocalDateTime.parse(fechaI2);
             fechaFinal = LocalDateTime.parse(fechaF2);
 
-        } catch (Exception e) {
+        } catch (Exception ex) {
 
             JOptionPane.showMessageDialog(null, "Ingrese la fecha usando el siguiente formato AAAA-MM-DD y para la hora HH:MM:SS");
 
-        } finally {
-            try {
-                if (promedioLabel.isVisible()) {
-                    promedio = Double.parseDouble(txt4.getText());
-                } else if (semestreLabel.isVisible()) {
-                    semestre = Integer.parseInt(txt5.getText());
-                }
-            } catch (NumberFormatException e) {
-                JOptionPane.showMessageDialog(null, "Verifique los campos vacios");
-            }
-            if (tipoEstudiante.getSelectedIndex() == 1) {
-                EstudiantePregrado estudiantePre = new EstudiantePregrado(promedio, nombre, programa, codigo);
-                Monitoria monitoria = new Monitoria(tema, materia, fechaInicio, fechaFinal, estudiantePre);
-                listaMonitorias.add(monitoria);
-            } else if (tipoEstudiante.getSelectedIndex() == 2) {
-                EstudiantePostgrado estudiantePost = new EstudiantePostgrado(semestre, nombre, programa, codigo);
-                Monitoria monitoria = new Monitoria(tema, materia, fechaInicio, fechaFinal, estudiantePost);
-                listaMonitorias.add(monitoria);
-            } else if (tipoEstudiante.getSelectedIndex() == 0) {
-                JOptionPane.showMessageDialog(null, "Porfavor seleccione un tipo de estudiante");
-            }
-
         }
 
-        txt1.setText("");
-        txt2.setText("");
-        txt3.setText("");
-        txt4.setText("");
-        txt5.setText("");
-        txt6.setText("");
-        txt7.setText("");
-        txt8.setText("AAAA-MM-DD");
-        txt9.setText("AAAA-MM-DD");
-        time1.setText("HH:MM:SS");
-        time2.setText("HH:MM:SS");
-        tipoEstudiante.setSelectedIndex(0);
+        
+        //Condicional if para tomar valor de promedio o semestre dependiendo si escoge un estudiante de post o pre grado
+        if (promedioLabel.isVisible()) {
+            try{
+            promedio = Double.parseDouble(txt4.getText());
+            }catch(NumberFormatException nF){
+                JOptionPane.showMessageDialog(null,"Porfavor digite un promedio");
+            }
+        } else if (semestreLabel.isVisible()) {
+            try{
+            semestre = Integer.parseInt(txt5.getText());
+            }catch(NumberFormatException nF){
+                JOptionPane.showMessageDialog(null, "Porfavor Digite un semestre");
+            }
+        }
+
+        if ((tipoEstudiante.getSelectedIndex() == 1) && !"".equals(nombre) && !"".equals(codigo) && !"".equals(programa) && !"".equals(materia) && !"".equals(tema) ) {
+            EstudiantePregrado estudiantePre = new EstudiantePregrado(promedio, nombre, programa, codigo);
+            Monitoria monitoria = new Monitoria(tema, materia, fechaInicio, fechaFinal, estudiantePre);
+            listaMonitorias.add(monitoria);
+            setVoidAll();
+        } else if ((tipoEstudiante.getSelectedIndex() == 2) && !"".equals(nombre) && !"".equals(codigo) && !"".equals(programa) && !"".equals(materia) && !"".equals(tema)) {
+            EstudiantePostgrado estudiantePost = new EstudiantePostgrado(semestre, nombre, programa, codigo);
+            Monitoria monitoria = new Monitoria(tema, materia, fechaInicio, fechaFinal, estudiantePost);
+            listaMonitorias.add(monitoria);
+            setVoidAll();
+        } else if (tipoEstudiante.getSelectedIndex() == 0) {
+            JOptionPane.showMessageDialog(null, "Porfavor seleccione un tipo de estudiante");
+        }
+
+
+        if(tipoEstudiante.getSelectedIndex()==0){
+            promedioLabel.setVisible(false);
+            txt4.setVisible(false);
+            semestreLabel.setVisible(false);
+            txt5.setVisible(false);
+        }
+        
 
     }//GEN-LAST:event_jButton2ActionPerformed
 
+    
     private void txt4KeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txt4KeyTyped
         // TODO add your handling code here:
         char c = evt.getKeyChar();
@@ -527,11 +548,11 @@ public class Interfaz extends javax.swing.JFrame {
     private void txt1KeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txt1KeyTyped
         // TODO add your handling code here:
 
-        char c = evt.getKeyChar();
+        /*char c = evt.getKeyChar();
 
         if ((c < '0' || c > '9') && (c != '\b')) {
             evt.consume();
-        }
+        }*/
     }//GEN-LAST:event_txt1KeyTyped
 
     /**

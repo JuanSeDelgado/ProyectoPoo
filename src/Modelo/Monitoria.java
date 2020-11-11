@@ -92,4 +92,10 @@ public class Monitoria {
         
         return info ;
     }
+
+    @Override
+    public String toString() {
+        return "Monitoria{" + "materia=" + materia + ", tema=" + tema + ", fechaInicio=" + fechaInicio + ", fechaFinal=" + fechaFinal + ", suEstudiante=" + suEstudiante + '}';
+    }
+    
 }
