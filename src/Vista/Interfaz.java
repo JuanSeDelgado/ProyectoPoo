@@ -5,6 +5,7 @@
  */
 package Vista;
 
+import Modelo.Estudiante;
 import Modelo.EstudiantePostgrado;
 import Modelo.EstudiantePregrado;
 import Modelo.Monitoria;
@@ -12,6 +13,7 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.LinkedList;
 import javax.swing.JOptionPane;
+import javax.swing.JTable;
 
 /**
  *
@@ -23,6 +25,7 @@ public class Interfaz extends javax.swing.JFrame {
      * Creates new form Interfaz
      */
     LinkedList<Monitoria> listaMonitorias;
+    int numeroC=1;
 
     public Interfaz() {
         initComponents();
@@ -32,18 +35,19 @@ public class Interfaz extends javax.swing.JFrame {
         semestreLabel.setVisible(false);
         txt4.setVisible(false);
         txt5.setVisible(false);
+        
+        
     }
 
     public int sumarUno() {
-        int numero = 0;
-        if (numero < numero + 1) {
-            numero++;
+        if (numeroC < numeroC + 1) {
+            numeroC++;
         }
-        return numero;
+        return numeroC;
     }
-    
+
     // Despues de guardar una monitoria setea todos los textField vacios, y a su formato inicial
-    public void setVoidAll(){
+    public void setVoidAll() {
         txt1.setText("");
         txt2.setText("");
         txt3.setText("");
@@ -56,6 +60,15 @@ public class Interfaz extends javax.swing.JFrame {
         time1.setText("HH:MM:SS");
         time2.setText("HH:MM:SS");
         tipoEstudiante.setSelectedIndex(0);
+    }
+    
+    private void resizeTable() {
+        table1.getColumnModel().getColumn(0).setPreferredWidth(30);
+        table1.getColumnModel().getColumn(2).setPreferredWidth(200);
+        table1.getColumnModel().getColumn(3).setPreferredWidth(100);
+        table1.getColumnModel().getColumn(6).setPreferredWidth(150);
+        table1.getColumnModel().getColumn(7).setPreferredWidth(125);
+        table1.getColumnModel().getColumn(8).setPreferredWidth(125);
     }
 
     /**
@@ -98,9 +111,18 @@ public class Interfaz extends javax.swing.JFrame {
         jLabel12 = new javax.swing.JLabel();
         time2 = new javax.swing.JTextField();
         jPanel2 = new javax.swing.JPanel();
+        jButton3 = new javax.swing.JButton();
+        jLabel13 = new javax.swing.JLabel();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        table1 = new javax.swing.JTable();
         jPanel3 = new javax.swing.JPanel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowOpened(java.awt.event.WindowEvent evt) {
+                formWindowOpened(evt);
+            }
+        });
 
         jTabbedPane1.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
 
@@ -270,7 +292,7 @@ public class Interfaz extends javax.swing.JFrame {
                                 .addComponent(jLabel11)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(time1, javax.swing.GroupLayout.PREFERRED_SIZE, 77, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addGap(0, 10, Short.MAX_VALUE))))
+                        .addGap(0, 31, Short.MAX_VALUE))))
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGap(82, 82, 82)
                 .addComponent(jLabel1)
@@ -334,20 +356,88 @@ public class Interfaz extends javax.swing.JFrame {
                             .addComponent(time2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(48, 48, 48)
                         .addComponent(jButton2)))
-                .addContainerGap(147, Short.MAX_VALUE))
+                .addContainerGap(137, Short.MAX_VALUE))
         );
 
         jTabbedPane1.addTab("Ingresar Monitoria", jPanel1);
+
+        jButton3.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        jButton3.setText("Consultar Todas Las Monitorias");
+        jButton3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton3ActionPerformed(evt);
+            }
+        });
+
+        jLabel13.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        jLabel13.setText("Presione el botón para visualizar todas las monitorias registradas hasta el momento.");
+
+        table1.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null}
+            },
+            new String [] {
+                "No.", "Codigo", "Nombre", "Programa", "Promedio", "Semestre", "Asignatura/Tema", "Dia/Hora(Inicio)", "Dia/Hora(Final)"
+            }
+        ) {
+            Class[] types = new Class [] {
+                java.lang.Integer.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class
+            };
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false, false, false, false, false, false
+            };
+
+            public Class getColumnClass(int columnIndex) {
+                return types [columnIndex];
+            }
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        jScrollPane1.setViewportView(table1);
+        if (table1.getColumnModel().getColumnCount() > 0) {
+            table1.getColumnModel().getColumn(0).setResizable(false);
+            table1.getColumnModel().getColumn(1).setResizable(false);
+            table1.getColumnModel().getColumn(2).setResizable(false);
+            table1.getColumnModel().getColumn(3).setResizable(false);
+            table1.getColumnModel().getColumn(4).setResizable(false);
+            table1.getColumnModel().getColumn(5).setResizable(false);
+            table1.getColumnModel().getColumn(6).setResizable(false);
+            table1.getColumnModel().getColumn(7).setResizable(false);
+            table1.getColumnModel().getColumn(8).setResizable(false);
+        }
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 827, Short.MAX_VALUE)
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addGap(35, 35, 35)
+                .addComponent(jLabel13)
+                .addGap(0, 0, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
+                .addGap(305, 339, Short.MAX_VALUE)
+                .addComponent(jButton3)
+                .addGap(292, 292, 292))
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jScrollPane1)
+                .addContainerGap())
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 449, Short.MAX_VALUE)
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addGap(37, 37, 37)
+                .addComponent(jLabel13)
+                .addGap(18, 18, 18)
+                .addComponent(jButton3)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 278, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(55, Short.MAX_VALUE))
         );
 
         jTabbedPane1.addTab("Consultar Monitorias", jPanel2);
@@ -356,11 +446,11 @@ public class Interfaz extends javax.swing.JFrame {
         jPanel3.setLayout(jPanel3Layout);
         jPanel3Layout.setHorizontalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 827, Short.MAX_VALUE)
+            .addGap(0, 852, Short.MAX_VALUE)
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 449, Short.MAX_VALUE)
+            .addGap(0, 439, Short.MAX_VALUE)
         );
 
         jTabbedPane1.addTab("Consultar Monitorias De Un Estudiante", jPanel3);
@@ -453,17 +543,14 @@ public class Interfaz extends javax.swing.JFrame {
         String materia = txt6.getText();
         String tema = txt7.getText();
 
-        double promedio= 0;
-        int semestre=0;
+        double promedio = 0;
+        int semestre = 0;
 
-        
         if ("".equals(nombre) || "".equals(codigo) || "".equals(programa) || "".equals(materia) || "".equals(tema)) {
 
             JOptionPane.showMessageDialog(null, "Verifique los campos vacios");
         }
-        
-       
-        
+
         //Try-Catch para el formato de la fecha y hora
         try {
             String fechaI1 = txt8.getText();
@@ -483,48 +570,50 @@ public class Interfaz extends javax.swing.JFrame {
 
         }
 
-        
         //Condicional if para tomar valor de promedio o semestre dependiendo si escoge un estudiante de post o pre grado
         if (promedioLabel.isVisible()) {
-            try{
-            promedio = Double.parseDouble(txt4.getText());
-            }catch(NumberFormatException nF){
-                JOptionPane.showMessageDialog(null,"Porfavor digite un promedio");
+            try {
+                promedio = Double.parseDouble(txt4.getText());
+            } catch (NumberFormatException nF) {
+                JOptionPane.showMessageDialog(null, "Porfavor digite un promedio");
             }
         } else if (semestreLabel.isVisible()) {
-            try{
-            semestre = Integer.parseInt(txt5.getText());
-            }catch(NumberFormatException nF){
+            try {
+                semestre = Integer.parseInt(txt5.getText());
+            } catch (NumberFormatException nF) {
                 JOptionPane.showMessageDialog(null, "Porfavor Digite un semestre");
             }
         }
 
-        if ((tipoEstudiante.getSelectedIndex() == 1) && !"".equals(nombre) && !"".equals(codigo) && !"".equals(programa) && !"".equals(materia) && !"".equals(tema) ) {
+        if ((tipoEstudiante.getSelectedIndex() == 1) && !"".equals(nombre) && !"".equals(codigo) && !"".equals(programa) && !"".equals(materia) && !"".equals(tema)) {
             EstudiantePregrado estudiantePre = new EstudiantePregrado(promedio, nombre, programa, codigo);
-            Monitoria monitoria = new Monitoria(tema, materia, fechaInicio, fechaFinal, estudiantePre);
+            Monitoria monitoria = new Monitoria(tema, materia,numeroC+"", fechaInicio, fechaFinal, estudiantePre);
             listaMonitorias.add(monitoria);
             setVoidAll();
+            sumarUno();
+            JOptionPane.showMessageDialog(null, "Se ha guardado correctamente");
         } else if ((tipoEstudiante.getSelectedIndex() == 2) && !"".equals(nombre) && !"".equals(codigo) && !"".equals(programa) && !"".equals(materia) && !"".equals(tema)) {
             EstudiantePostgrado estudiantePost = new EstudiantePostgrado(semestre, nombre, programa, codigo);
-            Monitoria monitoria = new Monitoria(tema, materia, fechaInicio, fechaFinal, estudiantePost);
+            Monitoria monitoria = new Monitoria(tema, materia,numeroC+"", fechaInicio, fechaFinal, estudiantePost);
             listaMonitorias.add(monitoria);
             setVoidAll();
+            sumarUno();
+            JOptionPane.showMessageDialog(null, "Se ha guardado correctamente");
         } else if (tipoEstudiante.getSelectedIndex() == 0) {
             JOptionPane.showMessageDialog(null, "Porfavor seleccione un tipo de estudiante");
         }
 
-
-        if(tipoEstudiante.getSelectedIndex()==0){
+        if (tipoEstudiante.getSelectedIndex() == 0) {
             promedioLabel.setVisible(false);
             txt4.setVisible(false);
             semestreLabel.setVisible(false);
             txt5.setVisible(false);
         }
-        
+
 
     }//GEN-LAST:event_jButton2ActionPerformed
 
-    
+
     private void txt4KeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txt4KeyTyped
         // TODO add your handling code here:
         char c = evt.getKeyChar();
@@ -548,12 +637,60 @@ public class Interfaz extends javax.swing.JFrame {
     private void txt1KeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txt1KeyTyped
         // TODO add your handling code here:
 
-        /*char c = evt.getKeyChar();
+        char c = evt.getKeyChar();
 
         if ((c < '0' || c > '9') && (c != '\b')) {
             evt.consume();
-        }*/
+        }
     }//GEN-LAST:event_txt1KeyTyped
+
+    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+        // TODO add your handling code here:
+
+        String matriz[][] = new String[listaMonitorias.size()][9];
+
+        for (int i = 0; i < listaMonitorias.size(); i++) {
+
+            matriz[i][0] = listaMonitorias.get(i).getConsecutivo();
+            matriz[i][1] = listaMonitorias.get(i).getSuEstudiante().getCodigo();
+            matriz[i][2] = listaMonitorias.get(i).getSuEstudiante().getNombre();
+            matriz[i][3] = listaMonitorias.get(i).getSuEstudiante().getPrograma();
+            
+            if (listaMonitorias.get(i).getSuEstudiante() instanceof EstudiantePregrado) {
+                EstudiantePregrado getPre = (EstudiantePregrado) listaMonitorias.get(i).getSuEstudiante();
+                matriz[i][4] = getPre.getPromedio() + "";
+
+            }
+            if (listaMonitorias.get(i).getSuEstudiante() instanceof EstudiantePostgrado) {
+                EstudiantePostgrado getPost = (EstudiantePostgrado) listaMonitorias.get(i).getSuEstudiante();
+                matriz[i][5] = getPost.getSemestre() + "";
+            }
+
+            matriz[i][6] = listaMonitorias.get(i).getMateria() + "/" + listaMonitorias.get(i).getTema();
+            matriz[i][7] = listaMonitorias.get(i).getFechaInicio() + ""; 
+            matriz[i][8] = listaMonitorias.get(i).getFechaFinal() + "";
+
+        }
+
+        table1.setModel(new javax.swing.table.DefaultTableModel(
+                matriz,
+                new String[]{
+                    "No.", "Codigo", "Nombre", "Programa", "Promedio", "Semestre", "Asignatura/Tema", "Dia/Hora(Inicio)", "Dia/Hora(Final)"
+                }
+        ));
+       
+        
+         resizeTable();
+
+
+    }//GEN-LAST:event_jButton3ActionPerformed
+
+    private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
+        // TODO add your handling code here:
+
+        resizeTable();
+   
+    }//GEN-LAST:event_formWindowOpened
 
     /**
      * @param args the command line arguments
@@ -593,10 +730,12 @@ public class Interfaz extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
+    private javax.swing.JButton jButton3;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel12;
+    private javax.swing.JLabel jLabel13;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
@@ -608,9 +747,11 @@ public class Interfaz extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
+    private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTabbedPane jTabbedPane1;
     private javax.swing.JLabel promedioLabel;
     private javax.swing.JLabel semestreLabel;
+    private javax.swing.JTable table1;
     private javax.swing.JTextField time1;
     private javax.swing.JTextField time2;
     private javax.swing.JComboBox<String> tipoEstudiante;
@@ -624,4 +765,6 @@ public class Interfaz extends javax.swing.JFrame {
     private javax.swing.JTextField txt8;
     private javax.swing.JTextField txt9;
     // End of variables declaration//GEN-END:variables
+
+    
 }
