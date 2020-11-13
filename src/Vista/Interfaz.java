@@ -81,14 +81,6 @@ public class Interfaz extends javax.swing.JFrame {
         table2.getColumnModel().getColumn(8).setPreferredWidth(125);
     }
     
-    public int sumarUno(){
-            int numero = 0;
-            if(numero<numero+1){
-                numero++;
-            }
-            return numero;
-        }
-
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
