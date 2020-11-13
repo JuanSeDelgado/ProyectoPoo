@@ -5,11 +5,17 @@
  */
 package Vista;
 
+import Modelo.Estudiante;
 import Modelo.EstudiantePostgrado;
 import Modelo.EstudiantePregrado;
 import Modelo.Monitoria;
+import java.awt.event.MouseEvent;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.LinkedList;
 import javax.swing.JOptionPane;
+import javax.swing.JTable;
+import javax.swing.table.DefaultTableModel;
 
 /**
  *
@@ -21,6 +27,7 @@ public class Interfaz extends javax.swing.JFrame {
      * Creates new form Interfaz
      */
     LinkedList<Monitoria> listaMonitorias;
+    int numeroC = 1;
 
     public Interfaz() {
         initComponents();
@@ -30,6 +37,48 @@ public class Interfaz extends javax.swing.JFrame {
         semestreLabel.setVisible(false);
         txt4.setVisible(false);
         txt5.setVisible(false);
+
+    }
+
+    public int sumarUno() {
+        if (numeroC < numeroC + 1) {
+            numeroC++;
+        }
+        return numeroC;
+    }
+
+    // Despues de guardar una monitoria setea todos los textField vacios, y a su formato inicial
+    public void setVoidAll() {
+        txt1.setText("");
+        txt2.setText("");
+        txt3.setText("");
+        txt4.setText("");
+        txt5.setText("");
+        txt6.setText("");
+        txt7.setText("");
+        txt8.setText("AAAA-MM-DD");
+        txt9.setText("AAAA-MM-DD");
+        time1.setText("HH:MM:SS");
+        time2.setText("HH:MM:SS");
+        tipoEstudiante.setSelectedIndex(0);
+    }
+
+    private void resizeTable() {
+        table1.getColumnModel().getColumn(0).setPreferredWidth(30);
+        table1.getColumnModel().getColumn(2).setPreferredWidth(200);
+        table1.getColumnModel().getColumn(3).setPreferredWidth(100);
+        table1.getColumnModel().getColumn(6).setPreferredWidth(150);
+        table1.getColumnModel().getColumn(7).setPreferredWidth(125);
+        table1.getColumnModel().getColumn(8).setPreferredWidth(125);
+    }
+
+    private void resizeTable2() {
+        table2.getColumnModel().getColumn(0).setPreferredWidth(30);
+        table2.getColumnModel().getColumn(2).setPreferredWidth(200);
+        table2.getColumnModel().getColumn(3).setPreferredWidth(100);
+        table2.getColumnModel().getColumn(6).setPreferredWidth(150);
+        table2.getColumnModel().getColumn(7).setPreferredWidth(125);
+        table2.getColumnModel().getColumn(8).setPreferredWidth(125);
     }
     
     public int sumarUno(){
@@ -75,10 +124,28 @@ public class Interfaz extends javax.swing.JFrame {
         txt9 = new javax.swing.JTextField();
         jButton1 = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
+        time1 = new javax.swing.JTextField();
+        jLabel11 = new javax.swing.JLabel();
+        jLabel12 = new javax.swing.JLabel();
+        time2 = new javax.swing.JTextField();
         jPanel2 = new javax.swing.JPanel();
+        jButton3 = new javax.swing.JButton();
+        jLabel13 = new javax.swing.JLabel();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        table1 = new javax.swing.JTable();
         jPanel3 = new javax.swing.JPanel();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        table2 = new javax.swing.JTable();
+        jLabel14 = new javax.swing.JLabel();
+        txtConsultar = new javax.swing.JTextField();
+        jButton4 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowOpened(java.awt.event.WindowEvent evt) {
+                formWindowOpened(evt);
+            }
+        });
 
         jTabbedPane1.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
 
@@ -94,10 +161,16 @@ public class Interfaz extends javax.swing.JFrame {
         jLabel4.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jLabel4.setText("Programa:");
 
+        txt1.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txt1KeyTyped(evt);
+            }
+        });
+
         jLabel5.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jLabel5.setText("Tipo Estudiante");
 
-        tipoEstudiante.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "     -Seleccione-", "Pregrado", "PostGrado" }));
+        tipoEstudiante.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "-Seleccione-", "Pregrado", "PostGrado" }));
         tipoEstudiante.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 tipoEstudianteActionPerformed(evt);
@@ -112,12 +185,23 @@ public class Interfaz extends javax.swing.JFrame {
             }
         });
 
+        txt4.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txt4KeyTyped(evt);
+            }
+        });
+
         semestreLabel.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         semestreLabel.setText("Semestre:");
 
         txt5.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 txt5ActionPerformed(evt);
+            }
+        });
+        txt5.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txt5KeyTyped(evt);
             }
         });
 
@@ -136,9 +220,9 @@ public class Interfaz extends javax.swing.JFrame {
         jLabel10.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jLabel10.setText("Fecha de Fin:");
 
-        txt8.setText("AAAA-MM-DD HH:MM:SS");
+        txt8.setText("AAAA-MM-DD");
 
-        txt9.setText("AAAA-MM-DD HH:MM:SS");
+        txt9.setText("AAAA-MM-DD");
 
         jButton1.setText("Buscar Estudiante");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
@@ -149,6 +233,21 @@ public class Interfaz extends javax.swing.JFrame {
 
         jButton2.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jButton2.setText("Guardar Monitoria");
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
+
+        time1.setText("HH:MM:SS");
+
+        jLabel11.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        jLabel11.setText("Hora");
+
+        jLabel12.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        jLabel12.setText("Hora");
+
+        time2.setText("HH:MM:SS");
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -159,27 +258,17 @@ public class Interfaz extends javax.swing.JFrame {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(jLabel2)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 202, Short.MAX_VALUE)
+                        .addGap(250, 250, 250)
                         .addComponent(jButton1)
                         .addGap(88, 88, 88)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jLabel7)
-                                    .addComponent(jLabel8))
-                                .addGap(18, 18, 18)
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addComponent(txt6)
-                                    .addComponent(txt7, javax.swing.GroupLayout.PREFERRED_SIZE, 87, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jLabel9)
-                                    .addComponent(jLabel10))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addComponent(txt8)
-                                    .addComponent(txt9, javax.swing.GroupLayout.PREFERRED_SIZE, 141, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                        .addGap(103, 103, 103))
+                            .addComponent(jLabel7)
+                            .addComponent(jLabel8))
+                        .addGap(18, 18, 18)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(txt6)
+                            .addComponent(txt7, javax.swing.GroupLayout.PREFERRED_SIZE, 87, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addContainerGap())
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel3)
@@ -206,7 +295,27 @@ public class Interfaz extends javax.swing.JFrame {
                                     .addComponent(txt4, javax.swing.GroupLayout.PREFERRED_SIZE, 53, javax.swing.GroupLayout.PREFERRED_SIZE))))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(jButton2)
-                        .addGap(161, 161, 161))))
+                        .addGap(161, 161, 161))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(473, 473, 473)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel9)
+                            .addComponent(jLabel10))
+                        .addGap(18, 18, 18)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(txt8, javax.swing.GroupLayout.PREFERRED_SIZE, 82, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(txt9, javax.swing.GroupLayout.PREFERRED_SIZE, 82, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(18, 18, 18)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addComponent(jLabel12)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(time2))
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addComponent(jLabel11)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(time1, javax.swing.GroupLayout.PREFERRED_SIZE, 77, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGap(0, 33, Short.MAX_VALUE))))
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGap(82, 82, 82)
                 .addComponent(jLabel1)
@@ -259,40 +368,187 @@ public class Interfaz extends javax.swing.JFrame {
                         .addGap(24, 24, 24)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel9)
-                            .addComponent(txt8, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(txt8, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(time1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel11))
                         .addGap(28, 28, 28)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel10)
-                            .addComponent(txt9, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(txt9, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel12)
+                            .addComponent(time2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(48, 48, 48)
                         .addComponent(jButton2)))
-                .addContainerGap(80, Short.MAX_VALUE))
+                .addContainerGap(137, Short.MAX_VALUE))
         );
 
         jTabbedPane1.addTab("Ingresar Monitoria", jPanel1);
+
+        jButton3.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        jButton3.setText("Consultar Todas Las Monitorias");
+        jButton3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton3ActionPerformed(evt);
+            }
+        });
+
+        jLabel13.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        jLabel13.setText("Presione el botón para visualizar todas las monitorias registradas hasta el momento.");
+
+        table1.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null}
+            },
+            new String [] {
+                "No.", "Codigo", "Nombre", "Programa", "Promedio", "Semestre", "Asignatura/Tema", "Dia/Hora(Inicio)", "Dia/Hora(Final)"
+            }
+        ) {
+            Class[] types = new Class [] {
+                java.lang.Integer.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class
+            };
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false, false, false, false, false, false
+            };
+
+            public Class getColumnClass(int columnIndex) {
+                return types [columnIndex];
+            }
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        table1.getTableHeader().setReorderingAllowed(false);
+        jScrollPane1.setViewportView(table1);
+        if (table1.getColumnModel().getColumnCount() > 0) {
+            table1.getColumnModel().getColumn(0).setResizable(false);
+            table1.getColumnModel().getColumn(1).setResizable(false);
+            table1.getColumnModel().getColumn(2).setResizable(false);
+            table1.getColumnModel().getColumn(3).setResizable(false);
+            table1.getColumnModel().getColumn(4).setResizable(false);
+            table1.getColumnModel().getColumn(5).setResizable(false);
+            table1.getColumnModel().getColumn(6).setResizable(false);
+            table1.getColumnModel().getColumn(7).setResizable(false);
+            table1.getColumnModel().getColumn(8).setResizable(false);
+        }
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 827, Short.MAX_VALUE)
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addGap(35, 35, 35)
+                .addComponent(jLabel13)
+                .addGap(0, 0, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
+                .addGap(305, 339, Short.MAX_VALUE)
+                .addComponent(jButton3)
+                .addGap(292, 292, 292))
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jScrollPane1)
+                .addContainerGap())
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 382, Short.MAX_VALUE)
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addGap(37, 37, 37)
+                .addComponent(jLabel13)
+                .addGap(18, 18, 18)
+                .addComponent(jButton3)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 278, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(55, Short.MAX_VALUE))
         );
 
         jTabbedPane1.addTab("Consultar Monitorias", jPanel2);
+
+        table2.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null}
+            },
+            new String [] {
+                "No.", "Codigo", "Nombre", "Programa", "Promedio", "Semestre", "Asignatura/Tema", "Dia/Hora(Inicio)", "Dia/Hora(Final)"
+            }
+        ) {
+            Class[] types = new Class [] {
+                java.lang.Integer.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class
+            };
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false, false, false, false, false, false
+            };
+
+            public Class getColumnClass(int columnIndex) {
+                return types [columnIndex];
+            }
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        table2.getTableHeader().setReorderingAllowed(false);
+        table2.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                table2MouseClicked(evt);
+            }
+        });
+        jScrollPane2.setViewportView(table2);
+        if (table2.getColumnModel().getColumnCount() > 0) {
+            table2.getColumnModel().getColumn(0).setResizable(false);
+            table2.getColumnModel().getColumn(1).setResizable(false);
+            table2.getColumnModel().getColumn(2).setResizable(false);
+            table2.getColumnModel().getColumn(3).setResizable(false);
+            table2.getColumnModel().getColumn(4).setResizable(false);
+            table2.getColumnModel().getColumn(5).setResizable(false);
+            table2.getColumnModel().getColumn(6).setResizable(false);
+            table2.getColumnModel().getColumn(7).setResizable(false);
+            table2.getColumnModel().getColumn(8).setResizable(false);
+        }
+
+        jLabel14.setText("Digite el codigo del estudiante del cual desea consultar las monitorias a las que a asistido: ");
+
+        jButton4.setText("Consultar");
+        jButton4.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton4ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
         jPanel3Layout.setHorizontalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 827, Short.MAX_VALUE)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 832, Short.MAX_VALUE)
+                .addContainerGap())
+            .addGroup(jPanel3Layout.createSequentialGroup()
+                .addGap(26, 26, 26)
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jButton4)
+                    .addComponent(jLabel14))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(txtConsultar, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 382, Short.MAX_VALUE)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel14)
+                    .addComponent(txtConsultar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addComponent(jButton4)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 31, Short.MAX_VALUE)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 278, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(58, 58, 58))
         );
 
         jTabbedPane1.addTab("Consultar Monitorias De Un Estudiante", jPanel3);
@@ -374,6 +630,227 @@ public class Interfaz extends javax.swing.JFrame {
 
     }//GEN-LAST:event_tipoEstudianteActionPerformed
 
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        // TODO add your handling code here:
+        LocalDateTime fechaInicio = null;
+        LocalDateTime fechaFinal = null;
+
+        String nombre = txt2.getText();
+        String codigo = txt1.getText();
+        String programa = txt3.getText();
+        String materia = txt6.getText();
+        String tema = txt7.getText();
+
+        double promedio = 0;
+        int semestre = 0;
+
+        if ("".equals(nombre) || "".equals(codigo) || "".equals(programa) || "".equals(materia) || "".equals(tema)) {
+
+            JOptionPane.showMessageDialog(null, "Verifique los campos vacios");
+        }
+
+        //Try-Catch para el formato de la fecha y hora
+        try {
+            String fechaI1 = txt8.getText();
+            String timeI1 = "T" + time1.getText();
+            String fechaI2 = fechaI1 + timeI1;
+
+            String fechaF1 = txt9.getText();
+            String time2G = "T" + time2.getText();
+            String fechaF2 = fechaF1 + time2G;
+
+            fechaInicio = LocalDateTime.parse(fechaI2);
+            fechaFinal = LocalDateTime.parse(fechaF2);
+
+        } catch (Exception ex) {
+
+            JOptionPane.showMessageDialog(null, "Ingrese la fecha usando el siguiente formato AAAA-MM-DD y para la hora HH:MM:SS");
+
+        }
+
+        //Condicional if para tomar valor de promedio o semestre dependiendo si escoge un estudiante de post o pre grado
+        if (promedioLabel.isVisible()) {
+            try {
+                promedio = Double.parseDouble(txt4.getText());
+            } catch (NumberFormatException nF) {
+                JOptionPane.showMessageDialog(null, "Porfavor digite un promedio");
+            }
+        } else if (semestreLabel.isVisible()) {
+            try {
+                semestre = Integer.parseInt(txt5.getText());
+            } catch (NumberFormatException nF) {
+                JOptionPane.showMessageDialog(null, "Porfavor Digite un semestre");
+            }
+        }
+
+        if ((tipoEstudiante.getSelectedIndex() == 1) && !"".equals(nombre) && !"".equals(codigo) && !"".equals(programa) && !"".equals(materia) && !"".equals(tema)) {
+            EstudiantePregrado estudiantePre = new EstudiantePregrado(promedio, nombre, programa, codigo);
+            Monitoria monitoria = new Monitoria(materia, tema, numeroC + "", fechaInicio, fechaFinal, estudiantePre);
+            listaMonitorias.add(monitoria);
+            setVoidAll();
+            sumarUno();
+            JOptionPane.showMessageDialog(null, "Se ha guardado correctamente");
+        } else if ((tipoEstudiante.getSelectedIndex() == 2) && !"".equals(nombre) && !"".equals(codigo) && !"".equals(programa) && !"".equals(materia) && !"".equals(tema)) {
+            EstudiantePostgrado estudiantePost = new EstudiantePostgrado(semestre, nombre, programa, codigo);
+            Monitoria monitoria = new Monitoria(materia, tema, numeroC + "", fechaInicio, fechaFinal, estudiantePost);
+            listaMonitorias.add(monitoria);
+            setVoidAll();
+            sumarUno();
+            JOptionPane.showMessageDialog(null, "Se ha guardado correctamente");
+        } else if (tipoEstudiante.getSelectedIndex() == 0) {
+            JOptionPane.showMessageDialog(null, "Porfavor seleccione un tipo de estudiante");
+        }
+
+        if (tipoEstudiante.getSelectedIndex() == 0) {
+            promedioLabel.setVisible(false);
+            txt4.setVisible(false);
+            semestreLabel.setVisible(false);
+            txt5.setVisible(false);
+        }
+
+
+    }//GEN-LAST:event_jButton2ActionPerformed
+
+
+    private void txt4KeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txt4KeyTyped
+        // TODO add your handling code here:
+        char c = evt.getKeyChar();
+
+        if ((c < '0' || c > '9') && (c < '.' || c > '.') && (c != '\b')) {
+            evt.consume();
+        }
+
+    }//GEN-LAST:event_txt4KeyTyped
+
+    private void txt5KeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txt5KeyTyped
+        // TODO add your handling code here:
+
+        char c = evt.getKeyChar();
+
+        if ((c < '0' || c > '9') && (c < '.' || c > '.') && (c != '\b')) {
+            evt.consume();
+        }
+    }//GEN-LAST:event_txt5KeyTyped
+
+    private void txt1KeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txt1KeyTyped
+        // TODO add your handling code here:
+
+        char c = evt.getKeyChar();
+
+        if ((c < '0' || c > '9') && (c != '\b')) {
+            evt.consume();
+        }
+    }//GEN-LAST:event_txt1KeyTyped
+
+    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+        // TODO add your handling code here:
+
+        String matriz[][] = new String[listaMonitorias.size()][9];
+
+        for (int i = 0; i < listaMonitorias.size(); i++) {
+
+            matriz[i][0] = listaMonitorias.get(i).getConsecutivo();
+            matriz[i][1] = listaMonitorias.get(i).getSuEstudiante().getCodigo();
+            matriz[i][2] = listaMonitorias.get(i).getSuEstudiante().getNombre();
+            matriz[i][3] = listaMonitorias.get(i).getSuEstudiante().getPrograma();
+
+            if (listaMonitorias.get(i).getSuEstudiante() instanceof EstudiantePregrado) {
+                EstudiantePregrado getPre = (EstudiantePregrado) listaMonitorias.get(i).getSuEstudiante();
+                matriz[i][4] = getPre.getPromedio() + "";
+
+            }
+            if (listaMonitorias.get(i).getSuEstudiante() instanceof EstudiantePostgrado) {
+                EstudiantePostgrado getPost = (EstudiantePostgrado) listaMonitorias.get(i).getSuEstudiante();
+                matriz[i][5] = getPost.getSemestre() + "";
+            }
+
+            matriz[i][6] = listaMonitorias.get(i).getMateria() + "/" + listaMonitorias.get(i).getTema();
+            matriz[i][7] = listaMonitorias.get(i).getFechaInicio() + "";
+            matriz[i][8] = listaMonitorias.get(i).getFechaFinal() + "";
+
+        }
+
+        table1.setModel(new javax.swing.table.DefaultTableModel(
+                matriz,
+                new String[]{
+                    "No.", "Codigo", "Nombre", "Programa", "Promedio", "Semestre", "Asignatura/Tema", "Dia/Hora(Inicio)", "Dia/Hora(Final)"
+                }
+        ));
+
+        resizeTable();
+
+
+    }//GEN-LAST:event_jButton3ActionPerformed
+
+    private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
+        // TODO add your handling code here:
+
+        resizeTable();
+        resizeTable2();
+
+    }//GEN-LAST:event_formWindowOpened
+
+    private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
+        // TODO add your handling code here:
+        int c = 0;
+        LinkedList<Monitoria> aux = new LinkedList<>();
+        String codigo = txtConsultar.getText();
+        if (codigo.equalsIgnoreCase("")) {
+            
+            JOptionPane.showMessageDialog(null, "Por favor ingrese un codigo");
+        }
+
+        for (int j = 0; j < listaMonitorias.size(); j++) {
+            if (codigo.equalsIgnoreCase(listaMonitorias.get(j).getSuEstudiante().getCodigo())) {
+                c++;
+
+                aux.add(listaMonitorias.get(j));
+
+            } 
+        }
+        String matriz2[][] = new String[aux.size()][9];
+        for (int i = 0; i < aux.size(); i++) {
+
+            matriz2[i][0] = aux.get(i).getConsecutivo();
+            matriz2[i][1] = aux.get(i).getSuEstudiante().getCodigo();
+            matriz2[i][2] = aux.get(i).getSuEstudiante().getNombre();
+            matriz2[i][3] = aux.get(i).getSuEstudiante().getPrograma();
+
+            if (aux.get(i).getSuEstudiante() instanceof EstudiantePregrado) {
+                
+                EstudiantePregrado getPre = (EstudiantePregrado) aux.get(i).getSuEstudiante();
+                matriz2[i][4] = getPre.getPromedio() + "";
+
+            }
+            if (aux.get(i).getSuEstudiante() instanceof EstudiantePostgrado) {
+                
+                EstudiantePostgrado getPost = (EstudiantePostgrado) aux.get(i).getSuEstudiante();
+                matriz2[i][5] = getPost.getSemestre() + "";
+            }
+
+            matriz2[i][6] = aux.get(i).getMateria() + " / " + aux.get(i).getTema();
+            matriz2[i][7] = aux.get(i).getFechaInicio() + "";
+            matriz2[i][8] = aux.get(i).getFechaFinal() + "";
+
+        }
+
+        table2.setModel(new javax.swing.table.DefaultTableModel(
+                matriz2,
+                new String[]{
+                    "No.", "Codigo", "Nombre", "Programa", "Promedio", "Semestre", "Asignatura/Tema", "Dia/Hora(Inicio)", "Dia/Hora(Final)"
+                }
+        ));
+
+        resizeTable2();
+
+
+    }//GEN-LAST:event_jButton4ActionPerformed
+
+    private void table2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_table2MouseClicked
+        // TODO add your handling code here:
+
+    }//GEN-LAST:event_table2MouseClicked
+
     /**
      * @param args the command line arguments
      */
@@ -412,8 +889,14 @@ public class Interfaz extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
+    private javax.swing.JButton jButton3;
+    private javax.swing.JButton jButton4;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
+    private javax.swing.JLabel jLabel11;
+    private javax.swing.JLabel jLabel12;
+    private javax.swing.JLabel jLabel13;
+    private javax.swing.JLabel jLabel14;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
@@ -425,9 +908,15 @@ public class Interfaz extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JTabbedPane jTabbedPane1;
     private javax.swing.JLabel promedioLabel;
     private javax.swing.JLabel semestreLabel;
+    private javax.swing.JTable table1;
+    private javax.swing.JTable table2;
+    private javax.swing.JTextField time1;
+    private javax.swing.JTextField time2;
     private javax.swing.JComboBox<String> tipoEstudiante;
     private javax.swing.JTextField txt1;
     private javax.swing.JTextField txt2;
@@ -438,5 +927,7 @@ public class Interfaz extends javax.swing.JFrame {
     private javax.swing.JTextField txt7;
     private javax.swing.JTextField txt8;
     private javax.swing.JTextField txt9;
+    private javax.swing.JTextField txtConsultar;
     // End of variables declaration//GEN-END:variables
+
 }

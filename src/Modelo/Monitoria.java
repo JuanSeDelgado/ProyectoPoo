@@ -11,11 +11,11 @@ import java.time.LocalDateTime;
 
 /**
  *
- * @author Diego Alejandro
+ * @author 
  */
 public class Monitoria {
     
-    private String materia, tema;
+    private String materia, tema, consecutivo;
     private LocalDateTime fechaInicio,fechaFinal;
     private Estudiante suEstudiante;
 
@@ -23,12 +23,18 @@ public class Monitoria {
     }
     
 
-    public Monitoria(String tema, LocalDateTime fechaInicio, LocalDateTime fechaFinal, Estudiante suEstudiante) {
+    
+
+    public Monitoria(String materia, String tema, String consecutivo, LocalDateTime fechaInicio, LocalDateTime fechaFinal, Estudiante suEstudiante) {
+        this.materia = materia;
         this.tema = tema;
+        this.consecutivo = consecutivo;
         this.fechaInicio = fechaInicio;
         this.fechaFinal = fechaFinal;
         this.suEstudiante = suEstudiante;
     }
+    
+    
 
     public Estudiante getSuEstudiante() {
         return suEstudiante;
@@ -69,6 +75,16 @@ public class Monitoria {
     public void setFechaFinal(LocalDateTime fechaFinal) {
         this.fechaFinal = fechaFinal;
     }
+
+    public String getConsecutivo() {
+        return consecutivo;
+    }
+
+    public void setConsecutivo(String consecutivo) {
+        this.consecutivo = consecutivo;
+    }
+    
+    
     
     private static long[] getTime(LocalDateTime fechaDesde, LocalDateTime fechaHasta){
         Duration duracion = Duration.between(fechaHasta, fechaDesde);
@@ -91,4 +107,10 @@ public class Monitoria {
         
         return info ;
     }
+
+    @Override
+    public String toString() {
+        return "Monitoria{" + "materia=" + materia + ", tema=" + tema + ", fechaInicio=" + fechaInicio + ", fechaFinal=" + fechaFinal + ", suEstudiante=" + suEstudiante + '}';
+    }
+    
 }
