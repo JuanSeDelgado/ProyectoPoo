@@ -10,6 +10,12 @@ import Modelo.EstudiantePostgrado;
 import Modelo.EstudiantePregrado;
 import Modelo.Monitoria;
 import java.awt.event.MouseEvent;
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.PrintWriter;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.LinkedList;
@@ -28,6 +34,8 @@ public class Interfaz extends javax.swing.JFrame {
      */
     LinkedList<Monitoria> listaMonitorias;
     int numeroC = 1;
+    
+    
 
     public Interfaz() {
         initComponents();
@@ -37,6 +45,8 @@ public class Interfaz extends javax.swing.JFrame {
         semestreLabel.setVisible(false);
         txt4.setVisible(false);
         txt5.setVisible(false);
+        recuperarDatos(listaMonitorias);
+        
 
     }
 
@@ -79,6 +89,87 @@ public class Interfaz extends javax.swing.JFrame {
         table2.getColumnModel().getColumn(6).setPreferredWidth(150);
         table2.getColumnModel().getColumn(7).setPreferredWidth(125);
         table2.getColumnModel().getColumn(8).setPreferredWidth(125);
+    }
+
+    public void almacenardatos(LinkedList<Monitoria> monitorias) {
+
+        try {
+
+            String nombreArchivo = "C:\\Users\\User\\Desktop\\datos.txt";
+            PrintWriter salida = new PrintWriter(new BufferedWriter(new FileWriter(nombreArchivo)));
+            String linea = "";
+            for (Monitoria obj : monitorias) {
+                if (obj.getSuEstudiante() instanceof EstudiantePostgrado) {
+                    EstudiantePostgrado getPost = (EstudiantePostgrado) obj.getSuEstudiante();
+                    linea = "1" + "--" + obj.getConsecutivo() + "--" + obj.getSuEstudiante().getCodigo() + "--"
+                            + obj.getSuEstudiante().getNombre() + "--" + obj.getSuEstudiante().getPrograma() + "--"
+                            + getPost.getSemestre() + "--" + obj.getMateria() + "--" + obj.getTema() + "--"
+                            + obj.getFechaInicio() + "--" + obj.getFechaFinal();
+                    salida.println(linea);
+                    //JOptionPane.showMessageDialog(null, "exito");
+                }
+                if (obj.getSuEstudiante() instanceof EstudiantePregrado) {
+                    EstudiantePregrado getPre = (EstudiantePregrado) obj.getSuEstudiante();
+                    linea = "2" + "--" + obj.getConsecutivo() + "--" + obj.getSuEstudiante().getCodigo() + "--"
+                            + obj.getSuEstudiante().getNombre() + "--" + obj.getSuEstudiante().getPrograma() + "--"
+                            + getPre.getPromedio() + "--" + obj.getMateria() + "--" + obj.getTema() + "--"
+                            + obj.getFechaInicio() + "--" + obj.getFechaFinal();
+                    salida.println(linea);
+                    //JOptionPane.showMessageDialog(null, "exito");
+                }
+            }
+            salida.close();
+        } catch (IOException e) {
+            JOptionPane.showMessageDialog(null, "error al guardar los datos");
+        }
+    }
+
+    public void recuperarDatos(LinkedList<Monitoria> monitorias) {
+
+        try {
+            String nombreArchivo = "C:\\Users\\User\\Desktop\\datos.txt";
+            BufferedReader entrada = new BufferedReader(new FileReader(nombreArchivo));
+            String[] datos;
+            String linea, nombre, codigo, programa, materia, consecutivo, tema;
+            int semestre;
+            double promedio;
+            LocalDateTime fechaInicio, fechaFinal;
+
+            while ((linea = entrada.readLine()) != null) {
+
+                datos = linea.split("--");
+                if (datos[0].equalsIgnoreCase("1")) {
+                    consecutivo = datos[1];
+                    codigo = datos[2];
+                    nombre = datos[3];
+                    programa = datos[4];
+                    semestre = Integer.parseInt(datos[5]);
+                    materia = datos[6];
+                    tema = datos[7];
+                    fechaInicio = LocalDateTime.parse(datos[8]);
+                    fechaFinal = LocalDateTime.parse(datos[9]);
+                    monitorias.add(new Monitoria(materia, tema, consecutivo, fechaInicio, fechaFinal, new EstudiantePostgrado(semestre, nombre, programa, codigo)));
+
+                }
+                if (datos[0].equalsIgnoreCase("2")) {
+                    consecutivo = datos[1];
+                    codigo = datos[2];
+                    nombre = datos[3];
+                    programa = datos[4];
+                    promedio = Double.parseDouble(datos[5]);
+                    materia = datos[6];
+                    tema = datos[7];
+                    fechaInicio = LocalDateTime.parse(datos[8]);
+                    fechaFinal = LocalDateTime.parse(datos[9]);
+                    monitorias.add(new Monitoria(materia, tema, consecutivo, fechaInicio, fechaFinal, new EstudiantePregrado(promedio, nombre, programa, codigo)));
+
+                }
+
+            }
+            entrada.close();
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "error al recuperar los datos "+e.toString());
+        }
     }
 
     /**
@@ -692,7 +783,7 @@ public class Interfaz extends javax.swing.JFrame {
         } else if (tipoEstudiante.getSelectedIndex() == 0) {
             JOptionPane.showMessageDialog(null, "Porfavor seleccione un tipo de estudiante");
         }
-
+        almacenardatos(listaMonitorias);
         if (tipoEstudiante.getSelectedIndex() == 0) {
             promedioLabel.setVisible(false);
             txt4.setVisible(false);
@@ -779,6 +870,7 @@ public class Interfaz extends javax.swing.JFrame {
 
         resizeTable();
         resizeTable2();
+        
 
     }//GEN-LAST:event_formWindowOpened
 
@@ -788,7 +880,7 @@ public class Interfaz extends javax.swing.JFrame {
         LinkedList<Monitoria> aux = new LinkedList<>();
         String codigo = txtConsultar.getText();
         if (codigo.equalsIgnoreCase("")) {
-            
+
             JOptionPane.showMessageDialog(null, "Por favor ingrese un codigo");
         }
 
@@ -798,7 +890,7 @@ public class Interfaz extends javax.swing.JFrame {
 
                 aux.add(listaMonitorias.get(j));
 
-            } 
+            }
         }
         String matriz2[][] = new String[aux.size()][9];
         for (int i = 0; i < aux.size(); i++) {
@@ -809,13 +901,13 @@ public class Interfaz extends javax.swing.JFrame {
             matriz2[i][3] = aux.get(i).getSuEstudiante().getPrograma();
 
             if (aux.get(i).getSuEstudiante() instanceof EstudiantePregrado) {
-                
+
                 EstudiantePregrado getPre = (EstudiantePregrado) aux.get(i).getSuEstudiante();
                 matriz2[i][4] = getPre.getPromedio() + "";
 
             }
             if (aux.get(i).getSuEstudiante() instanceof EstudiantePostgrado) {
-                
+
                 EstudiantePostgrado getPost = (EstudiantePostgrado) aux.get(i).getSuEstudiante();
                 matriz2[i][5] = getPost.getSemestre() + "";
             }
