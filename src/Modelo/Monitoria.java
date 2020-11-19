@@ -7,23 +7,20 @@ package Modelo;
 
 import java.time.Duration;
 import java.time.LocalDateTime;
-
+import javax.swing.JOptionPane;
 
 /**
  *
- * @author 
+ * @author
  */
 public class Monitoria {
-    
+
     private String materia, tema, consecutivo;
-    private LocalDateTime fechaInicio,fechaFinal;
+    private LocalDateTime fechaInicio, fechaFinal;
     private Estudiante suEstudiante;
 
     public Monitoria() {
     }
-    
-
-    
 
     public Monitoria(String materia, String tema, String consecutivo, LocalDateTime fechaInicio, LocalDateTime fechaFinal, Estudiante suEstudiante) {
         this.materia = materia;
@@ -33,8 +30,6 @@ public class Monitoria {
         this.fechaFinal = fechaFinal;
         this.suEstudiante = suEstudiante;
     }
-    
-    
 
     public Estudiante getSuEstudiante() {
         return suEstudiante;
@@ -83,34 +78,28 @@ public class Monitoria {
     public void setConsecutivo(String consecutivo) {
         this.consecutivo = consecutivo;
     }
-    
-    
-    
-    private static long[] getTime(LocalDateTime fechaDesde, LocalDateTime fechaHasta){
+
+    private static long getTime(LocalDateTime fechaDesde, LocalDateTime fechaHasta) {
         Duration duracion = Duration.between(fechaHasta, fechaDesde);
-        
-        long segundos = duracion.getSeconds();
+
         long minutos = duracion.toMinutes();
-        
-        return new long[] {minutos,segundos};
- 
+
+        return minutos;
+
     }
 
-    public String tiempoMonitoria(){
-        long time[] = getTime(fechaInicio, fechaFinal);
-        
-        String minutos = time[0] + "minutos";
-        String segundos = time [1] + "segundos";
-        
-        String info = minutos + segundos;
+    public int tiempoMonitoria() {
 
-        
-        return info ;
+        long time = getTime(fechaFinal, fechaInicio);
+
+        int minutos = (int) time;
+
+        return minutos;
     }
 
     @Override
     public String toString() {
         return "Monitoria{" + "materia=" + materia + ", tema=" + tema + ", fechaInicio=" + fechaInicio + ", fechaFinal=" + fechaFinal + ", suEstudiante=" + suEstudiante + '}';
     }
-    
+
 }

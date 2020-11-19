@@ -18,6 +18,7 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.Collections;
 import java.util.LinkedList;
 import javax.swing.JOptionPane;
 import javax.swing.JTable;
@@ -34,8 +35,6 @@ public class Interfaz extends javax.swing.JFrame {
      */
     LinkedList<Monitoria> listaMonitorias;
     int numeroC = 1;
-    
-    
 
     public Interfaz() {
         initComponents();
@@ -46,7 +45,7 @@ public class Interfaz extends javax.swing.JFrame {
         txt4.setVisible(false);
         txt5.setVisible(false);
         recuperarDatos(listaMonitorias);
-        
+       
 
     }
 
@@ -91,11 +90,11 @@ public class Interfaz extends javax.swing.JFrame {
         table2.getColumnModel().getColumn(8).setPreferredWidth(125);
     }
 
-    public void almacenardatos(LinkedList<Monitoria> monitorias) {
+    public void almacenarDatos(LinkedList<Monitoria> monitorias) {
 
         try {
 
-            String nombreArchivo = "C:\\Users\\User\\Desktop\\datos.txt";
+            String nombreArchivo = "datos.txt";
             PrintWriter salida = new PrintWriter(new BufferedWriter(new FileWriter(nombreArchivo)));
             String linea = "";
             for (Monitoria obj : monitorias) {
@@ -127,7 +126,7 @@ public class Interfaz extends javax.swing.JFrame {
     public void recuperarDatos(LinkedList<Monitoria> monitorias) {
 
         try {
-            String nombreArchivo = "C:\\Users\\User\\Desktop\\datos.txt";
+            String nombreArchivo = "datos.txt";
             BufferedReader entrada = new BufferedReader(new FileReader(nombreArchivo));
             String[] datos;
             String linea, nombre, codigo, programa, materia, consecutivo, tema;
@@ -138,6 +137,7 @@ public class Interfaz extends javax.swing.JFrame {
             while ((linea = entrada.readLine()) != null) {
 
                 datos = linea.split("--");
+                
                 if (datos[0].equalsIgnoreCase("1")) {
                     consecutivo = datos[1];
                     codigo = datos[2];
@@ -149,6 +149,7 @@ public class Interfaz extends javax.swing.JFrame {
                     fechaInicio = LocalDateTime.parse(datos[8]);
                     fechaFinal = LocalDateTime.parse(datos[9]);
                     monitorias.add(new Monitoria(materia, tema, consecutivo, fechaInicio, fechaFinal, new EstudiantePostgrado(semestre, nombre, programa, codigo)));
+                    
 
                 }
                 if (datos[0].equalsIgnoreCase("2")) {
@@ -162,14 +163,31 @@ public class Interfaz extends javax.swing.JFrame {
                     fechaInicio = LocalDateTime.parse(datos[8]);
                     fechaFinal = LocalDateTime.parse(datos[9]);
                     monitorias.add(new Monitoria(materia, tema, consecutivo, fechaInicio, fechaFinal, new EstudiantePregrado(promedio, nombre, programa, codigo)));
-
+                    
                 }
-
+                
             }
+            continuarConsecutivo(monitorias);
             entrada.close();
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(null, "error al recuperar los datos "+e.toString());
+            JOptionPane.showMessageDialog(null, "error al recuperar los datos " + e.toString());
         }
+    }
+
+    public void continuarConsecutivo(LinkedList<Monitoria> mAux) {
+        
+        int sMayor = Integer.parseInt(mAux.get(0).getConsecutivo());
+        for (int i = 1; i < mAux.size(); i++) {
+            
+            int actual = Integer.parseInt(mAux.get(i).getConsecutivo());
+
+            if(actual>sMayor){
+                
+                sMayor = actual;
+            }
+            
+        }
+        numeroC = sMayor + 1;
     }
 
     /**
@@ -222,6 +240,8 @@ public class Interfaz extends javax.swing.JFrame {
         jLabel14 = new javax.swing.JLabel();
         txtConsultar = new javax.swing.JTextField();
         jButton4 = new javax.swing.JButton();
+        jLabel15 = new javax.swing.JLabel();
+        jTextField1 = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         addWindowListener(new java.awt.event.WindowAdapter() {
@@ -398,7 +418,7 @@ public class Interfaz extends javax.swing.JFrame {
                                 .addComponent(jLabel11)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(time1, javax.swing.GroupLayout.PREFERRED_SIZE, 77, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addGap(0, 33, Short.MAX_VALUE))))
+                        .addGap(0, 34, Short.MAX_VALUE))))
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGap(82, 82, 82)
                 .addComponent(jLabel1)
@@ -419,7 +439,7 @@ public class Interfaz extends javax.swing.JFrame {
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel2)
                             .addComponent(txt1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jButton1))
+                            .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(23, 23, 23)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel3)
@@ -596,6 +616,12 @@ public class Interfaz extends javax.swing.JFrame {
 
         jLabel14.setText("Digite el codigo del estudiante del cual desea consultar las monitorias a las que a asistido: ");
 
+        txtConsultar.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtConsultarKeyTyped(evt);
+            }
+        });
+
         jButton4.setText("Consultar");
         jButton4.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -603,21 +629,36 @@ public class Interfaz extends javax.swing.JFrame {
             }
         });
 
+        jLabel15.setText("Tiempo total de monitorias:");
+
+        jTextField1.setEditable(false);
+
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
         jPanel3Layout.setHorizontalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 832, Short.MAX_VALUE)
+            .addGroup(jPanel3Layout.createSequentialGroup()
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 832, Short.MAX_VALUE))
+                    .addGroup(jPanel3Layout.createSequentialGroup()
+                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel3Layout.createSequentialGroup()
+                                .addGap(26, 26, 26)
+                                .addComponent(jLabel14)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(txtConsultar, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(jPanel3Layout.createSequentialGroup()
+                                .addGap(236, 236, 236)
+                                .addComponent(jButton4)))
+                        .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
             .addGroup(jPanel3Layout.createSequentialGroup()
-                .addGap(26, 26, 26)
-                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jButton4)
-                    .addComponent(jLabel14))
+                .addGap(139, 139, 139)
+                .addComponent(jLabel15)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(txtConsultar, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel3Layout.setVerticalGroup(
@@ -630,8 +671,12 @@ public class Interfaz extends javax.swing.JFrame {
                 .addGap(18, 18, 18)
                 .addComponent(jButton4)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 31, Short.MAX_VALUE)
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 278, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(58, 58, 58))
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 203, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(40, 40, 40)
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel15)
+                    .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(73, 73, 73))
         );
 
         jTabbedPane1.addTab("Consultar Monitorias De Un Estudiante", jPanel3);
@@ -667,11 +712,12 @@ public class Interfaz extends javax.swing.JFrame {
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
         String codigo = txt1.getText();
+        boolean t = true;
 
         for (int i = 0; i < listaMonitorias.size(); i++) {
 
             if (codigo.equals(listaMonitorias.get(i).getSuEstudiante().getCodigo())) {
-
+                t = true;
                 txt2.setText(listaMonitorias.get(i).getSuEstudiante().getNombre());
                 txt3.setText(listaMonitorias.get(i).getSuEstudiante().getPrograma());
 
@@ -689,11 +735,19 @@ public class Interfaz extends javax.swing.JFrame {
                     txt5.setText(getPost.getSemestre() + "");
 
                 }
+                break;
 
             } else {
-                JOptionPane.showMessageDialog(null, "El estudiante buscado no ha sido registrado anteriormente");
+                t = false;
+
             }
         }
+        if (t == false) {
+
+            JOptionPane.showMessageDialog(null, "El estudiante buscado no ha sido registrado anteriormente");
+
+        }
+
 
     }//GEN-LAST:event_jButton1ActionPerformed
 
@@ -783,7 +837,7 @@ public class Interfaz extends javax.swing.JFrame {
         } else if (tipoEstudiante.getSelectedIndex() == 0) {
             JOptionPane.showMessageDialog(null, "Porfavor seleccione un tipo de estudiante");
         }
-        almacenardatos(listaMonitorias);
+        almacenarDatos(listaMonitorias);
         if (tipoEstudiante.getSelectedIndex() == 0) {
             promedioLabel.setVisible(false);
             txt4.setVisible(false);
@@ -828,6 +882,8 @@ public class Interfaz extends javax.swing.JFrame {
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
         // TODO add your handling code here:
 
+        Collections.sort(listaMonitorias, (x, y) -> x.getSuEstudiante().getCodigo().compareToIgnoreCase(y.getSuEstudiante().getCodigo()));
+
         String matriz[][] = new String[listaMonitorias.size()][9];
 
         for (int i = 0; i < listaMonitorias.size(); i++) {
@@ -870,13 +926,14 @@ public class Interfaz extends javax.swing.JFrame {
 
         resizeTable();
         resizeTable2();
-        
+
 
     }//GEN-LAST:event_formWindowOpened
 
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
         // TODO add your handling code here:
         int c = 0;
+        int tiempoTotal = 0;
         LinkedList<Monitoria> aux = new LinkedList<>();
         String codigo = txtConsultar.getText();
         if (codigo.equalsIgnoreCase("")) {
@@ -892,7 +949,14 @@ public class Interfaz extends javax.swing.JFrame {
 
             }
         }
+
+        for (Monitoria obj : aux) {
+            tiempoTotal += obj.tiempoMonitoria();
+        }
+        jTextField1.setText(tiempoTotal + " Minutos");
+
         String matriz2[][] = new String[aux.size()][9];
+
         for (int i = 0; i < aux.size(); i++) {
 
             matriz2[i][0] = aux.get(i).getConsecutivo();
@@ -934,6 +998,15 @@ public class Interfaz extends javax.swing.JFrame {
         // TODO add your handling code here:
 
     }//GEN-LAST:event_table2MouseClicked
+
+    private void txtConsultarKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtConsultarKeyTyped
+        // TODO add your handling code here:
+        char c = evt.getKeyChar();
+
+        if ((c < '0' || c > '9') && (c != '\b')) {
+            evt.consume();
+        }
+    }//GEN-LAST:event_txtConsultarKeyTyped
 
     /**
      * @param args the command line arguments
@@ -981,6 +1054,7 @@ public class Interfaz extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel13;
     private javax.swing.JLabel jLabel14;
+    private javax.swing.JLabel jLabel15;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
@@ -995,6 +1069,7 @@ public class Interfaz extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JTabbedPane jTabbedPane1;
+    private javax.swing.JTextField jTextField1;
     private javax.swing.JLabel promedioLabel;
     private javax.swing.JLabel semestreLabel;
     private javax.swing.JTable table1;
