@@ -3,13 +3,9 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package Vista;
+package ProyectoMonitorias;
 
-import Modelo.Estudiante;
-import Modelo.EstudiantePostgrado;
-import Modelo.EstudiantePregrado;
-import Modelo.Monitoria;
-import java.awt.event.MouseEvent;
+
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.FileReader;
@@ -28,15 +24,15 @@ import javax.swing.table.DefaultTableModel;
  *
  * @author Diego Alejandro
  */
-public class Interfaz extends javax.swing.JFrame {
+public class UsaMonitoria extends javax.swing.JFrame {
 
     /**
-     * Creates new form Interfaz
+     * Creates new form UsaMonitoria
      */
     LinkedList<Monitoria> listaMonitorias;
     int numeroC = 1;
 
-    public Interfaz() {
+    public UsaMonitoria() {
         initComponents();
         listaMonitorias = new LinkedList<>();
         setLocationRelativeTo(null);
@@ -223,14 +219,14 @@ public class Interfaz extends javax.swing.JFrame {
         txt7 = new javax.swing.JTextField();
         txt8 = new javax.swing.JTextField();
         txt9 = new javax.swing.JTextField();
-        jButton1 = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
+        BuscarEstudiante = new javax.swing.JButton();
+        GuardarMonitoria = new javax.swing.JButton();
         time1 = new javax.swing.JTextField();
         jLabel11 = new javax.swing.JLabel();
         jLabel12 = new javax.swing.JLabel();
         time2 = new javax.swing.JTextField();
         jPanel2 = new javax.swing.JPanel();
-        jButton3 = new javax.swing.JButton();
+        ConsultarMonitorias = new javax.swing.JButton();
         jLabel13 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
         table1 = new javax.swing.JTable();
@@ -239,7 +235,7 @@ public class Interfaz extends javax.swing.JFrame {
         table2 = new javax.swing.JTable();
         jLabel14 = new javax.swing.JLabel();
         txtConsultar = new javax.swing.JTextField();
-        jButton4 = new javax.swing.JButton();
+        ConsultarCodigo = new javax.swing.JButton();
         jLabel15 = new javax.swing.JLabel();
         jTextField1 = new javax.swing.JTextField();
 
@@ -327,18 +323,18 @@ public class Interfaz extends javax.swing.JFrame {
 
         txt9.setText("AAAA-MM-DD");
 
-        jButton1.setText("Buscar Estudiante");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
+        BuscarEstudiante.setText("Buscar Estudiante");
+        BuscarEstudiante.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+                BuscarEstudianteActionPerformed(evt);
             }
         });
 
-        jButton2.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        jButton2.setText("Guardar Monitoria");
-        jButton2.addActionListener(new java.awt.event.ActionListener() {
+        GuardarMonitoria.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        GuardarMonitoria.setText("Guardar Monitoria");
+        GuardarMonitoria.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton2ActionPerformed(evt);
+                GuardarMonitoriaActionPerformed(evt);
             }
         });
 
@@ -362,7 +358,7 @@ public class Interfaz extends javax.swing.JFrame {
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(jLabel2)
                         .addGap(250, 250, 250)
-                        .addComponent(jButton1)
+                        .addComponent(BuscarEstudiante)
                         .addGap(88, 88, 88)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel7)
@@ -397,7 +393,7 @@ public class Interfaz extends javax.swing.JFrame {
                                     .addComponent(txt5, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addComponent(txt4, javax.swing.GroupLayout.PREFERRED_SIZE, 53, javax.swing.GroupLayout.PREFERRED_SIZE))))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jButton2)
+                        .addComponent(GuardarMonitoria)
                         .addGap(161, 161, 161))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(473, 473, 473)
@@ -439,7 +435,7 @@ public class Interfaz extends javax.swing.JFrame {
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel2)
                             .addComponent(txt1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(BuscarEstudiante, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(23, 23, 23)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel3)
@@ -481,17 +477,17 @@ public class Interfaz extends javax.swing.JFrame {
                             .addComponent(jLabel12)
                             .addComponent(time2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(48, 48, 48)
-                        .addComponent(jButton2)))
+                        .addComponent(GuardarMonitoria)))
                 .addContainerGap(137, Short.MAX_VALUE))
         );
 
         jTabbedPane1.addTab("Ingresar Monitoria", jPanel1);
 
-        jButton3.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        jButton3.setText("Consultar Todas Las Monitorias");
-        jButton3.addActionListener(new java.awt.event.ActionListener() {
+        ConsultarMonitorias.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        ConsultarMonitorias.setText("Consultar Todas Las Monitorias");
+        ConsultarMonitorias.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton3ActionPerformed(evt);
+                ConsultarMonitoriasActionPerformed(evt);
             }
         });
 
@@ -548,7 +544,7 @@ public class Interfaz extends javax.swing.JFrame {
                 .addGap(0, 0, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
                 .addGap(305, 339, Short.MAX_VALUE)
-                .addComponent(jButton3)
+                .addComponent(ConsultarMonitorias)
                 .addGap(292, 292, 292))
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addContainerGap()
@@ -561,7 +557,7 @@ public class Interfaz extends javax.swing.JFrame {
                 .addGap(37, 37, 37)
                 .addComponent(jLabel13)
                 .addGap(18, 18, 18)
-                .addComponent(jButton3)
+                .addComponent(ConsultarMonitorias)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 278, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(55, Short.MAX_VALUE))
@@ -622,10 +618,10 @@ public class Interfaz extends javax.swing.JFrame {
             }
         });
 
-        jButton4.setText("Consultar");
-        jButton4.addActionListener(new java.awt.event.ActionListener() {
+        ConsultarCodigo.setText("Consultar");
+        ConsultarCodigo.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton4ActionPerformed(evt);
+                ConsultarCodigoActionPerformed(evt);
             }
         });
 
@@ -645,13 +641,13 @@ public class Interfaz extends javax.swing.JFrame {
                     .addGroup(jPanel3Layout.createSequentialGroup()
                         .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanel3Layout.createSequentialGroup()
+                                .addGap(236, 236, 236)
+                                .addComponent(ConsultarCodigo))
+                            .addGroup(jPanel3Layout.createSequentialGroup()
                                 .addGap(26, 26, 26)
                                 .addComponent(jLabel14)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(txtConsultar, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(jPanel3Layout.createSequentialGroup()
-                                .addGap(236, 236, 236)
-                                .addComponent(jButton4)))
+                                .addComponent(txtConsultar, javax.swing.GroupLayout.PREFERRED_SIZE, 77, javax.swing.GroupLayout.PREFERRED_SIZE)))
                         .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
             .addGroup(jPanel3Layout.createSequentialGroup()
@@ -669,7 +665,7 @@ public class Interfaz extends javax.swing.JFrame {
                     .addComponent(jLabel14)
                     .addComponent(txtConsultar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
-                .addComponent(jButton4)
+                .addComponent(ConsultarCodigo)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 31, Short.MAX_VALUE)
                 .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 203, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(40, 40, 40)
@@ -709,7 +705,7 @@ public class Interfaz extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_txt5ActionPerformed
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+    private void BuscarEstudianteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BuscarEstudianteActionPerformed
         // TODO add your handling code here:
         String codigo = txt1.getText();
         boolean t = true;
@@ -749,7 +745,7 @@ public class Interfaz extends javax.swing.JFrame {
         }
 
 
-    }//GEN-LAST:event_jButton1ActionPerformed
+    }//GEN-LAST:event_BuscarEstudianteActionPerformed
 
     private void tipoEstudianteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tipoEstudianteActionPerformed
         // TODO add your handling code here:
@@ -767,7 +763,7 @@ public class Interfaz extends javax.swing.JFrame {
 
     }//GEN-LAST:event_tipoEstudianteActionPerformed
 
-    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+    private void GuardarMonitoriaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_GuardarMonitoriaActionPerformed
         // TODO add your handling code here:
         LocalDateTime fechaInicio = null;
         LocalDateTime fechaFinal = null;
@@ -846,7 +842,7 @@ public class Interfaz extends javax.swing.JFrame {
         }
 
 
-    }//GEN-LAST:event_jButton2ActionPerformed
+    }//GEN-LAST:event_GuardarMonitoriaActionPerformed
 
 
     private void txt4KeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txt4KeyTyped
@@ -879,7 +875,7 @@ public class Interfaz extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_txt1KeyTyped
 
-    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+    private void ConsultarMonitoriasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ConsultarMonitoriasActionPerformed
         // TODO add your handling code here:
 
         Collections.sort(listaMonitorias, (x, y) -> x.getSuEstudiante().getCodigo().compareToIgnoreCase(y.getSuEstudiante().getCodigo()));
@@ -903,7 +899,7 @@ public class Interfaz extends javax.swing.JFrame {
                 matriz[i][5] = getPost.getSemestre() + "";
             }
 
-            matriz[i][6] = listaMonitorias.get(i).getMateria() + "/" + listaMonitorias.get(i).getTema();
+            matriz[i][6] = listaMonitorias.get(i).getMateria() + " / " + listaMonitorias.get(i).getTema();
             matriz[i][7] = listaMonitorias.get(i).getFechaInicio() + "";
             matriz[i][8] = listaMonitorias.get(i).getFechaFinal() + "";
 
@@ -919,7 +915,7 @@ public class Interfaz extends javax.swing.JFrame {
         resizeTable();
 
 
-    }//GEN-LAST:event_jButton3ActionPerformed
+    }//GEN-LAST:event_ConsultarMonitoriasActionPerformed
 
     private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
         // TODO add your handling code here:
@@ -930,7 +926,7 @@ public class Interfaz extends javax.swing.JFrame {
 
     }//GEN-LAST:event_formWindowOpened
 
-    private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
+    private void ConsultarCodigoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ConsultarCodigoActionPerformed
         // TODO add your handling code here:
         int c = 0;
         int tiempoTotal = 0;
@@ -992,7 +988,7 @@ public class Interfaz extends javax.swing.JFrame {
         resizeTable2();
 
 
-    }//GEN-LAST:event_jButton4ActionPerformed
+    }//GEN-LAST:event_ConsultarCodigoActionPerformed
 
     private void table2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_table2MouseClicked
         // TODO add your handling code here:
@@ -1025,29 +1021,30 @@ public class Interfaz extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(Interfaz.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(UsaMonitoria.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(Interfaz.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(UsaMonitoria.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(Interfaz.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(UsaMonitoria.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(Interfaz.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(UsaMonitoria.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
         //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new Interfaz().setVisible(true);
+                new UsaMonitoria().setVisible(true);
             }
         });
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
-    private javax.swing.JButton jButton3;
-    private javax.swing.JButton jButton4;
+    private javax.swing.JButton BuscarEstudiante;
+    private javax.swing.JButton ConsultarCodigo;
+    private javax.swing.JButton ConsultarMonitorias;
+    private javax.swing.JButton GuardarMonitoria;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
