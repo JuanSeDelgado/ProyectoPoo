@@ -22,7 +22,7 @@ import javax.swing.table.DefaultTableModel;
 
 /**
  *
- * @author Diego Alejandro
+ * @author 
  */
 public class UsaMonitoria extends javax.swing.JFrame {
 

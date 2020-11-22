@@ -7,7 +7,7 @@ package ProyectoMonitorias;
 
 /**
  *
- * @author Diego Alejandro
+ * @author 
  */
 public class EstudiantePregrado extends Estudiante{
     
