@@ -5,7 +5,6 @@
  */
 package ProyectoMonitorias;
 
-
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.FileReader;
@@ -22,7 +21,7 @@ import javax.swing.table.DefaultTableModel;
 
 /**
  *
- * @author 
+ * @author ¿
  */
 public class UsaMonitoria extends javax.swing.JFrame {
 
@@ -41,7 +40,6 @@ public class UsaMonitoria extends javax.swing.JFrame {
         txt4.setVisible(false);
         txt5.setVisible(false);
         recuperarDatos(listaMonitorias);
-       
 
     }
 
@@ -79,11 +77,12 @@ public class UsaMonitoria extends javax.swing.JFrame {
 
     private void resizeTable2() {
         table2.getColumnModel().getColumn(0).setPreferredWidth(30);
-        table2.getColumnModel().getColumn(2).setPreferredWidth(200);
+        table2.getColumnModel().getColumn(2).setPreferredWidth(180);
         table2.getColumnModel().getColumn(3).setPreferredWidth(100);
         table2.getColumnModel().getColumn(6).setPreferredWidth(150);
         table2.getColumnModel().getColumn(7).setPreferredWidth(125);
         table2.getColumnModel().getColumn(8).setPreferredWidth(125);
+        table2.getColumnModel().getColumn(9).setPreferredWidth(80);
     }
 
     public void almacenarDatos(LinkedList<Monitoria> monitorias) {
@@ -115,7 +114,7 @@ public class UsaMonitoria extends javax.swing.JFrame {
             }
             salida.close();
         } catch (IOException e) {
-            JOptionPane.showMessageDialog(null, "error al guardar los datos");
+            JOptionPane.showMessageDialog(null, "error al guardar los datos  " + e.toString());
         }
     }
 
@@ -133,7 +132,7 @@ public class UsaMonitoria extends javax.swing.JFrame {
             while ((linea = entrada.readLine()) != null) {
 
                 datos = linea.split("--");
-                
+
                 if (datos[0].equalsIgnoreCase("1")) {
                     consecutivo = datos[1];
                     codigo = datos[2];
@@ -145,7 +144,6 @@ public class UsaMonitoria extends javax.swing.JFrame {
                     fechaInicio = LocalDateTime.parse(datos[8]);
                     fechaFinal = LocalDateTime.parse(datos[9]);
                     monitorias.add(new Monitoria(materia, tema, consecutivo, fechaInicio, fechaFinal, new EstudiantePostgrado(semestre, nombre, programa, codigo)));
-                    
 
                 }
                 if (datos[0].equalsIgnoreCase("2")) {
@@ -159,9 +157,9 @@ public class UsaMonitoria extends javax.swing.JFrame {
                     fechaInicio = LocalDateTime.parse(datos[8]);
                     fechaFinal = LocalDateTime.parse(datos[9]);
                     monitorias.add(new Monitoria(materia, tema, consecutivo, fechaInicio, fechaFinal, new EstudiantePregrado(promedio, nombre, programa, codigo)));
-                    
+
                 }
-                
+
             }
             continuarConsecutivo(monitorias);
             entrada.close();
@@ -171,17 +169,17 @@ public class UsaMonitoria extends javax.swing.JFrame {
     }
 
     public void continuarConsecutivo(LinkedList<Monitoria> mAux) {
-        
+
         int sMayor = Integer.parseInt(mAux.get(0).getConsecutivo());
         for (int i = 1; i < mAux.size(); i++) {
-            
+
             int actual = Integer.parseInt(mAux.get(i).getConsecutivo());
 
-            if(actual>sMayor){
-                
+            if (actual > sMayor) {
+
                 sMayor = actual;
             }
-            
+
         }
         numeroC = sMayor + 1;
     }
@@ -356,19 +354,6 @@ public class UsaMonitoria extends javax.swing.JFrame {
                 .addGap(21, 21, 21)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(jLabel2)
-                        .addGap(250, 250, 250)
-                        .addComponent(BuscarEstudiante)
-                        .addGap(88, 88, 88)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel7)
-                            .addComponent(jLabel8))
-                        .addGap(18, 18, 18)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(txt6)
-                            .addComponent(txt7, javax.swing.GroupLayout.PREFERRED_SIZE, 87, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addContainerGap())
-                    .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel3)
                             .addComponent(jLabel4)
@@ -396,25 +381,39 @@ public class UsaMonitoria extends javax.swing.JFrame {
                         .addComponent(GuardarMonitoria)
                         .addGap(161, 161, 161))
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(473, 473, 473)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel9)
-                            .addComponent(jLabel10))
-                        .addGap(18, 18, 18)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(txt8, javax.swing.GroupLayout.PREFERRED_SIZE, 82, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(txt9, javax.swing.GroupLayout.PREFERRED_SIZE, 82, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(18, 18, 18)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addComponent(jLabel12)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(time2))
+                                .addComponent(jLabel2)
+                                .addGap(250, 250, 250)
+                                .addComponent(BuscarEstudiante)
+                                .addGap(88, 88, 88)
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jLabel7)
+                                    .addComponent(jLabel8))
+                                .addGap(18, 18, 18)
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addComponent(txt6)
+                                    .addComponent(txt7, javax.swing.GroupLayout.PREFERRED_SIZE, 87, javax.swing.GroupLayout.PREFERRED_SIZE)))
                             .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addComponent(jLabel11)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(time1, javax.swing.GroupLayout.PREFERRED_SIZE, 77, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addGap(0, 34, Short.MAX_VALUE))))
+                                .addGap(473, 473, 473)
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jLabel9)
+                                    .addComponent(jLabel10))
+                                .addGap(18, 18, 18)
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(txt8, javax.swing.GroupLayout.PREFERRED_SIZE, 82, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(txt9, javax.swing.GroupLayout.PREFERRED_SIZE, 82, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGap(18, 18, 18)
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addGroup(jPanel1Layout.createSequentialGroup()
+                                        .addComponent(jLabel12)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(time2))
+                                    .addGroup(jPanel1Layout.createSequentialGroup()
+                                        .addComponent(jLabel11)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(time1, javax.swing.GroupLayout.PREFERRED_SIZE, 77, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                        .addContainerGap(39, Short.MAX_VALUE))))
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGap(82, 82, 82)
                 .addComponent(jLabel1)
@@ -478,7 +477,7 @@ public class UsaMonitoria extends javax.swing.JFrame {
                             .addComponent(time2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(48, 48, 48)
                         .addComponent(GuardarMonitoria)))
-                .addContainerGap(137, Short.MAX_VALUE))
+                .addContainerGap(54, Short.MAX_VALUE))
         );
 
         jTabbedPane1.addTab("Ingresar Monitoria", jPanel1);
@@ -543,7 +542,7 @@ public class UsaMonitoria extends javax.swing.JFrame {
                 .addComponent(jLabel13)
                 .addGap(0, 0, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
-                .addGap(305, 339, Short.MAX_VALUE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(ConsultarMonitorias)
                 .addGap(292, 292, 292))
             .addGroup(jPanel2Layout.createSequentialGroup()
@@ -559,28 +558,28 @@ public class UsaMonitoria extends javax.swing.JFrame {
                 .addGap(18, 18, 18)
                 .addComponent(ConsultarMonitorias)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 278, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(55, Short.MAX_VALUE))
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 237, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(13, Short.MAX_VALUE))
         );
 
         jTabbedPane1.addTab("Consultar Monitorias", jPanel2);
 
         table2.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null}
+                {null, null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null, null}
             },
             new String [] {
-                "No.", "Codigo", "Nombre", "Programa", "Promedio", "Semestre", "Asignatura/Tema", "Dia/Hora(Inicio)", "Dia/Hora(Final)"
+                "No.", "Codigo", "Nombre", "Programa", "Promedio", "Semestre", "Asignatura/Tema", "Dia/Hora(Inicio)", "Dia/Hora(Final)", "Duración"
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.Integer.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class
+                java.lang.Integer.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class
             };
             boolean[] canEdit = new boolean [] {
-                false, false, false, false, false, false, false, false, false
+                false, false, false, false, false, false, false, false, false, false
             };
 
             public Class getColumnClass(int columnIndex) {
@@ -635,9 +634,6 @@ public class UsaMonitoria extends javax.swing.JFrame {
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel3Layout.createSequentialGroup()
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 832, Short.MAX_VALUE))
                     .addGroup(jPanel3Layout.createSequentialGroup()
                         .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanel3Layout.createSequentialGroup()
@@ -648,7 +644,8 @@ public class UsaMonitoria extends javax.swing.JFrame {
                                 .addComponent(jLabel14)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(txtConsultar, javax.swing.GroupLayout.PREFERRED_SIZE, 77, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addGap(0, 0, Short.MAX_VALUE)))
+                        .addGap(0, 309, Short.MAX_VALUE))
+                    .addComponent(jScrollPane2, javax.swing.GroupLayout.Alignment.TRAILING))
                 .addContainerGap())
             .addGroup(jPanel3Layout.createSequentialGroup()
                 .addGap(139, 139, 139)
@@ -666,13 +663,13 @@ public class UsaMonitoria extends javax.swing.JFrame {
                     .addComponent(txtConsultar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addComponent(ConsultarCodigo)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 31, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 203, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(40, 40, 40)
+                .addGap(18, 18, 18)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel15)
                     .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(73, 73, 73))
+                .addGap(98, 98, 98))
         );
 
         jTabbedPane1.addTab("Consultar Monitorias De Un Estudiante", jPanel3);
@@ -690,8 +687,8 @@ public class UsaMonitoria extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jTabbedPane1)
-                .addContainerGap())
+                .addComponent(jTabbedPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 387, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         pack();
@@ -777,7 +774,7 @@ public class UsaMonitoria extends javax.swing.JFrame {
         double promedio = 0;
         int semestre = 0;
 
-        if ("".equals(nombre) || "".equals(codigo) || "".equals(programa) || "".equals(materia) || "".equals(tema)) {
+        if ("".equals(nombre) || "".equals(codigo) || "".equals(programa) || "".equals(materia) || "".equals(tema) || fechaFinal == null || fechaInicio == null) {
 
             JOptionPane.showMessageDialog(null, "Verifique los campos vacios");
         }
@@ -805,18 +802,18 @@ public class UsaMonitoria extends javax.swing.JFrame {
         if (promedioLabel.isVisible()) {
             try {
                 promedio = Double.parseDouble(txt4.getText());
-            } catch (NumberFormatException nF) {
+            } catch (NumberFormatException e) {
                 JOptionPane.showMessageDialog(null, "Porfavor digite un promedio");
             }
         } else if (semestreLabel.isVisible()) {
             try {
                 semestre = Integer.parseInt(txt5.getText());
-            } catch (NumberFormatException nF) {
+            } catch (NumberFormatException e) {
                 JOptionPane.showMessageDialog(null, "Porfavor Digite un semestre");
             }
         }
 
-        if ((tipoEstudiante.getSelectedIndex() == 1) && !"".equals(nombre) && !"".equals(codigo) && !"".equals(programa) && !"".equals(materia) && !"".equals(tema)) {
+        if ((tipoEstudiante.getSelectedIndex() == 1) && !"".equals(nombre) && !"".equals(codigo) && !"".equals(programa) && !"".equals(materia) && !"".equals(tema) && !(fechaFinal==null)&& !(fechaInicio==null) ) {
             EstudiantePregrado estudiantePre = new EstudiantePregrado(promedio, nombre, programa, codigo);
             Monitoria monitoria = new Monitoria(materia, tema, numeroC + "", fechaInicio, fechaFinal, estudiantePre);
             listaMonitorias.add(monitoria);
@@ -951,7 +948,7 @@ public class UsaMonitoria extends javax.swing.JFrame {
         }
         jTextField1.setText(tiempoTotal + " Minutos");
 
-        String matriz2[][] = new String[aux.size()][9];
+        String matriz2[][] = new String[aux.size()][10];
 
         for (int i = 0; i < aux.size(); i++) {
 
@@ -975,13 +972,14 @@ public class UsaMonitoria extends javax.swing.JFrame {
             matriz2[i][6] = aux.get(i).getMateria() + " / " + aux.get(i).getTema();
             matriz2[i][7] = aux.get(i).getFechaInicio() + "";
             matriz2[i][8] = aux.get(i).getFechaFinal() + "";
+            matriz2[i][9] = aux.get(i).tiempoMonitoria() + "";
 
         }
 
         table2.setModel(new javax.swing.table.DefaultTableModel(
                 matriz2,
                 new String[]{
-                    "No.", "Codigo", "Nombre", "Programa", "Promedio", "Semestre", "Asignatura/Tema", "Dia/Hora(Inicio)", "Dia/Hora(Final)"
+                    "No.", "Codigo", "Nombre", "Programa", "Promedio", "Semestre", "Asignatura/Tema", "Dia/Hora(Inicio)", "Dia/Hora(Final)", "Duración"
                 }
         ));
 
